@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Paiement réussi 🎉</h1>
+<p>Veuillez vérifier votre email.</p>
+<script>
+fetch('/envoyer', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ email: localStorage.getItem('email') })
+});
+</script>
+</body>
+</html>

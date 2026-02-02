@@ -4,38 +4,48 @@
 <meta charset="UTF-8">
 <title>BDflix</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="/">
+<link rel="dns-prefetch" href="/">
+
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-
 <header class="navbar">
-<h1 class="logo">BDflix</h1>
+
+  <button class="home-btn" onclick="window.location.href='index.html'">
+    Accueil
+  </button>
+
+  <h1 class="logo">BDflix</h1>
+
 </header>
 
+<!-- 📢 PUB -->
+<div class="ad-banner">
+  📢 ESPACE PUBLICITAIRE
+</div>
 
 <section class="banner">
-<h2>Lis les meilleures bandes dessinées africaines</h2>
-<p>Chapitre 1 gratuit – Débloque la suite</p>
+  <h2>BD INTENSES , DROLES ET PLEINES DE PASSION</h2>
 </section>
 
 <div class="category">
-<h3>🔥 Populaires</h3>
-<div class="row" id="popular"></div>
+  <h3>🔥 Populaires</h3>
+  <div class="row" id="popular"></div>
 </div>
-
 
 <div class="category">
-<h3>✨ Nouveautés</h3>
-<div class="row" id="new"></div>
+  <h3>✨ Nouveautés</h3>
+  <div class="row" id="new"></div>
 </div>
-
 
 <div class="category">
-<h3>⭐ Recommandées</h3>
-<div class="row" id="recommended"></div>
+  <h3>⭐ Recommandées</h3>
+  <div class="row" id="recommended"></div>
 </div>
 
-<script src="js/app.js"></script>
+<script src="js/app.js" defer></script>
 </body>
 </html>

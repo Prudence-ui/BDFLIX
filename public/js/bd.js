@@ -1,38 +1,166 @@
 const params = new URLSearchParams(window.location.search);
-const id = params.get('id') || 1;
+const bdId = params.get("id");
+
+const bds = {
+  1: { titre: "MORPHEUCUK", image: "images/bd1.jpg", chapitres: 11 },
+  2: { titre: "TOMB RAIDER", image: "images/bd2.jpg", chapitres: 8 },
+  3: { titre: "MIRANDA", image: "images/bd3.jpg", chapitres: 13 },
+  4: { titre: "THE SHEPHERD'S WIFE", image: "images/bd4.jpg", chapitres: 21 },
+  5: { titre: "ISOLEE", image: "images/bd5.jpg", chapitres: 12 },
+  6: { titre: "SISTER GRACE", image: "images/bd6.jpg", chapitres: 4 },
+  7: { titre: "LOUISE", image: "images/bd7.jpg", chapitres: 22 },
+  8: { titre: "FAMILY SINS", image: "images/bd8.jpg", chapitres: 5 },
+  9: { titre: "DADDY", image: "images/bd9.jpg", chapitres: 4 },
+  10:{ titre: "MOM'S HELP", image: "images/bd10.jpg", chapitres: 3 },
+  11:{ titre: "DESIR FORBIDDEN", image: "images/bd11.jpg", chapitres: 6 },
+  12:{ titre: "LISTE DE VIE", image: "images/bd12.jpg", chapitres: 7 },
+  13:{ titre: "FATHER", image: "images/bd13.jpg", chapitres: 2 },
+  14:{ titre: "HELENA", image: "images/bd14.jpg", chapitres: 4 },
+  15:{ titre: "DETENTION", image: "images/bd15.jpg", chapitres: 2 },
+  16:{ titre: "LES BLACKS", image: "images/bd16.jpg", chapitres: 5 },
+  17:{ titre: "DESIRE", image: "images/bd17.jpg", chapitres: 4 },
+  18:{ titre: "EN COLLE", image: "images/bd18.jpg", chapitres: 13 },
+  19:{ titre: "INCESTE", image: "images/bd19.jpg", chapitres: 14 },
+  20:{ titre: "LA BORDEL DU QUARTIER", image: "images/bd20.jpg", chapitres: 20 }
 
 
-const bd = {
-id,
-titre: 'BD Numéro ' + id,
-cover: 'https://via.placeholder.com/300x450?text=BD+' + id,
-chapitres: 6
+
+
+
+
+
+
+
+
+
 };
 
-
-// Infos BD
-document.getElementById('titre').innerText = bd.titre;
-document.getElementById('cover').src = bd.cover;
-document.getElementById('chapitre-count').innerText = `📚 ${bd.chapitres} chapitres disponibles`;
-
-
-const container = document.getElementById('chapitres');
-
-for (let i = 1; i <= bd.chapitres; i++) {
-const div = document.createElement('div');
-div.className = 'chapitre' + (i === 1 ? '' : ' locked');
-
-
-div.innerHTML = `
-<span>Chapitre ${i}</span>
-<span>${i === 1 ? 'Lire gratuitement' : '🔒 Verrouillé'}</span>
-`;
-
-
-container.appendChild(div);
+// 🔒 sécurité
+const bd = bds[bdId];
+if (!bd) {
+  alert("BD introuvable");
+  location.href = "index.html";
 }
 
+// 🎨 infos BD
+document.getElementById("titre").textContent = bd.titre;
+document.getElementById("cover").src = bd.image;
 
-function payer() {
-alert('Paiement Fedapay – étape suivante');
+let chapitre = 1;
+
+const viewer = document.getElementById("pdf-viewer");
+const chapitreTitle = document.getElementById("chapitre-title");
+
+// 📖 charge chapitre
+function chargerChapitre() {
+  chapitreTitle.textContent = `📖 Chapitre ${chapitre}`;
+  viewer.src = `pdf/bd${bdId}/chapitre${chapitre}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+}
+
+chargerChapitre();
+
+// ➡️ chapitre suivant avec pub
+document.getElementById("nextBtn").onclick = () => {
+  if (chapitre >= bd.chapitres) {
+    alert("📚 Fin de la BD !");
+    return;
+  }
+
+  afficherPub(() => {
+    chapitre++;
+    chargerChapitre();
+  });
+};
+
+// 📺 interstitiel pub
+function afficherPub(next) {
+  const ad = document.createElement("div");
+
+  ad.style = `
+    position:fixed;
+    inset:0;
+    background:#000;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    z-index:9999;
+  `;
+
+  let time = 25;
+
+  ad.innerHTML = `
+    <p id="timer">📺 Publicité... ${time}s</p>
+    <button disabled id="skip"
+      style="
+        margin-top:25px;
+        padding:14px 28px;
+        border:none;
+        background:#e50914;
+        color:white;
+        font-size:18px;
+        border-radius:8px;
+        cursor:pointer;
+      ">
+      Continuer
+    </button>
+  `;
+
+  document.body.appendChild(ad);
+
+  const interval = setInterval(() => {
+    time--;
+    document.getElementById("timer").textContent = `📺 Publicité... ${time}s`;
+
+    if (time <= 0) {
+      clearInterval(interval);
+      const btn = document.getElementById("skip");
+      btn.disabled = false;
+      btn.textContent = "Continuer la lecture";
+    }
+  }, 1000);
+
+  document.getElementById("skip").onclick = () => {
+    ad.remove();
+    next();
+  };
+}
+
+// 🚫 anti clic droit
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+/* 📩 contact */
+function ouvrirContact() {
+  const box = document.getElementById("contact-box");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+async function envoyerMessage() {
+  const email = document.getElementById("contact-email").value;
+  const message = document.getElementById("contact-message").value;
+  const status = document.getElementById("contact-status");
+
+  if (!email || !message) {
+    status.textContent = "Remplissez tous les champs";
+    return;
+  }
+
+  status.textContent = "Envoi en cours...";
+
+  const res = await fetch("/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, message })
+  });
+
+  const data = await res.json();
+
+if(data.success){
+  status.textContent = "✅ Message envoyé !";
+}else{
+  status.textContent = "❌ Erreur : " + (data.error || "envoi impossible");
+}
+
 }

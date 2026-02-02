@@ -1,55 +1,46 @@
 require("dotenv").config();
-const express = require("express");
-const path = require("path");
-const { Resend } = require("resend");
-require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
 const compression = require("compression");
 const { Resend } = require("resend");
 
-const app = express(); // ✅ on initialise AVANT tout
-
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-/* 🚀 Optimisation vitesse */
+/* ⚡ compression = chargement rapide */
 app.use(compression());
 
-/* 📦 JSON */
+/* 📦 json */
 app.use(express.json());
 
-/* 📁 fichiers publics */
+/* 📁 public folder */
 app.use(express.static(path.join(__dirname, "public")));
 
-/* ✉️ RESEND */
+/* ✉️ resend */
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 app.post("/contact", async (req, res) => {
   const { email, message } = req.body;
 
   try {
-    const response = await resend.emails.send({
+    await resend.emails.send({
       from: "BDflix <onboarding@resend.dev>",
       to: process.env.EMAIL_TO,
       subject: "📩 Nouveau message BDflix",
       html: `
-        <p><strong>Email :</strong> ${email}</p>
+        <p><b>Email:</b> ${email}</p>
         <p>${message}</p>
       `
     });
 
-    console.log("✅ Resend:", response);
-
     res.json({ success: true });
-
   } catch (err) {
-    console.error("❌ Resend error:", err);
+    console.error(err);
     res.json({ success: false });
   }
 });
 
-/* 🌍 Serveur */
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log("🚀 Server running on port", PORT);
 });

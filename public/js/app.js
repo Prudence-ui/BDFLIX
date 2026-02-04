@@ -1,62 +1,65 @@
+// ⚡ Cloudinary CDN ultra rapide
+const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/";
+
 const categories = [
   {
-    id: 'popular',
+    id: "popular",
     bds: [
-      { id: 1, title: 'Morpheuscuk', image: 'images/bd1.jpg' },
-      { id: 2, title: 'Tomb Raider', image: 'images/bd2.jpg' },
-      { id: 3, title: 'Miranda', image: 'images/bd3.jpg' },
-      { id: 4, title: 'The shepherds wife', image: 'images/bd4.jpg' },
-      { id: 5, title: 'Isolee', image: 'images/bd5.jpg' }
+      { id: 1, title: "Morpheuscuk", image: CDN + "v1770055741/bd1_vhkz0m.jpg" },
+      { id: 2, title: "Tomb Raider", image: CDN + "v1770055739/bd2_nexzqc.jpg" },
+      { id: 3, title: "Miranda", image: CDN + "v1770055735/bd3_jqxcil.jpg" },
+      { id: 4, title: "The shepherds wife", image: CDN + "v1770055736/bd4_xr7ltr.jpg" },
+      { id: 5, title: "Isolee", image: CDN + "v1770055741/bd5_mm6gwh.jpg" }
     ]
   },
   {
-    id: 'new',
+    id: "new",
     bds: [
-      { id: 6, title: 'Sister grace', image: 'images/bd6.jpg' },
-      { id: 7, title: 'Louise', image: 'images/bd7.jpg' },
-      { id: 8, title: 'Family sins', image: 'images/bd8.jpg' },
-      { id: 9, title: 'Daddy', image: 'images/bd9.jpg' },
-      { id: 10, title: 'Mom s Help', image: 'images/bd10.jpg' }
+      { id: 6, title: "Sister grace", image: CDN + "v1770055749/bd6_kowuwf.jpg" },
+      { id: 7, title: "Louise", image: CDN + "v1770055738/bd7_heqzfx.jpg" },
+      { id: 8, title: "Family sins", image: CDN + "v1770055747/bd8_caxdoe.jpg" },
+      { id: 9, title: "Daddy", image: CDN + "v1770055746/bd9_gnuyhd.jpg" },
+      { id: 10, title: "Mom’s Help", image: CDN + "v1770055748/bd10_vtij6z.jpg" }
     ]
   },
   {
-    id: 'recommended',
+    id: "recommended",
     bds: [
-      { id: 11, title: 'Desir forbidden', image: 'images/bd11.jpg' },
-      { id: 12, title: 'Liste de vie', image: 'images/bd12.jpg' },
-      { id: 13, title: 'Father', image: 'images/bd13.jpg' },
-      { id: 14, title: 'Helena', image: 'images/bd14.jpg' },
-      { id: 15, title: 'Detention', image: 'images/bd15.jpg' },
-      { id: 16, title: 'Les Blacks', image: 'images/bd16.jpg' },
-      { id: 17, title: 'Desire', image: 'images/bd17.jpg' },
-      { id: 18, title: 'En colle', image: 'images/bd18.jpg' },
-      { id: 19, title: 'Inceste', image: 'images/bd19.jpg' },
-      { id: 20, title: 'La bordel du quartier', image: 'images/bd20.jpg' }
+      { id: 11, title: "Desir forbidden", image: CDN + "v1770055743/bd11_q4ne9o.jpg" },
+      { id: 12, title: "Liste de vie", image: CDN + "v1770055743/bd12_irq7fw.jpg" },
+      { id: 13, title: "Father", image: CDN + "v1770055743/bd13_cdimxi.jpg" },
+      { id: 14, title: "Helena", image: CDN + "v1770055743/bd14_foz8sf.jpg" },
+      { id: 15, title: "Detention", image: CDN + "v1770055743/bd15_ubrp04.jpg" },
+      { id: 16, title: "Les Blacks", image: CDN + "v1770055738/bd16_axm9uh.jpg" },
+      { id: 17, title: "Desire", image: CDN + "v1770055735/bd17_jymdgk.jpg" },
+      { id: 18, title: "En colle", image: CDN + "v1770055746/bd18_x5ebll.jpg" },
+      { id: 19, title: "Inceste", image: CDN + "v1770055738/bd19_ketlbr.jpg" },
+      { id: 20, title: "La bordel du quartier", image: CDN + "v1770055738/bd20_i0bhwd.jpg" }
     ]
   }
 ];
 
-categories.forEach(cat => {
-  const container = document.getElementById(cat.id);
+categories.forEach(({ id, bds }) => {
+  const container = document.getElementById(id);
   if (!container) return;
 
-  const fragment = document.createDocumentFragment(); // ⚡ ultra rapide DOM
+  const fragment = document.createDocumentFragment();
 
-  cat.bds.forEach(bd => {
+  bds.forEach(({ id, title, image }) => {
     const card = document.createElement("div");
     card.className = "bd-card";
 
     card.innerHTML = `
-      <img src="${bd.image}" alt="${bd.title}" loading="lazy">
+      <img src="${image}" alt="${title}" loading="lazy" decoding="async">
       <div class="overlay">
-        <h4>${bd.title}</h4>
+        <h4>${title}</h4>
         <button>Voir</button>
       </div>
     `;
 
-    card.onclick = () => {
-      window.location.href = `bd.html?id=${bd.id}`;
-    };
+    card.addEventListener("click", () => {
+      window.location.href = `bd.html?id=${id}`;
+    });
 
     fragment.appendChild(card);
   });

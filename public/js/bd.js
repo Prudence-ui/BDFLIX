@@ -1,6 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
+/* 📚 base CDN GitHub Release pour PDFs lourds */
+const BASE_PDF = "https://github.com/Prudence-ui/BDFLIX/releases/download/v1-pdfs/";
+
 const bds = {
   1: { titre: "MORPHEUCUK", image: "images/bd1.jpg", chapitres: 11 },
   2: { titre: "TOMB RAIDER", image: "images/bd2.jpg", chapitres: 8 },
@@ -22,17 +25,6 @@ const bds = {
   18:{ titre: "EN COLLE", image: "images/bd18.jpg", chapitres: 13 },
   19:{ titre: "INCESTE", image: "images/bd19.jpg", chapitres: 14 },
   20:{ titre: "LA BORDEL DU QUARTIER", image: "images/bd20.jpg", chapitres: 20 }
-
-
-
-
-
-
-
-
-
-
-
 };
 
 // 🔒 sécurité
@@ -51,12 +43,16 @@ let chapitre = 1;
 const viewer = document.getElementById("pdf-viewer");
 const chapitreTitle = document.getElementById("chapitre-title");
 
-// 📖 charge chapitre
+// 📖 charge chapitre depuis CDN (rapide + illimité)
 function chargerChapitre() {
   chapitreTitle.textContent = `📖 Chapitre ${chapitre}`;
-  viewer.src = `pdf/bd${bdId}/chapitre${chapitre}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+
+  viewer.src =
+    `${BASE_PDF}bd${bdId}-chapitre${chapitre}.pdf` +
+    `#toolbar=0&navpanes=0&scrollbar=0`;
 }
 
+// premier affichage
 chargerChapitre();
 
 // ➡️ chapitre suivant avec pub
@@ -72,7 +68,7 @@ document.getElementById("nextBtn").onclick = () => {
   });
 };
 
-// 📺 interstitiel pub
+// 📺 publicité interstitielle
 function afficherPub(next) {
   const ad = document.createElement("div");
 
@@ -157,10 +153,9 @@ async function envoyerMessage() {
 
   const data = await res.json();
 
-if(data.success){
-  status.textContent = "✅ Message envoyé !";
-}else{
-  status.textContent = "❌ Erreur : " + (data.error || "envoi impossible");
-}
-
+  if (data.success) {
+    status.textContent = "✅ Message envoyé !";
+  } else {
+    status.textContent = "❌ Erreur : " + (data.error || "envoi impossible");
+  }
 }

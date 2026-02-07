@@ -1,9 +1,14 @@
 const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
-/* 📚 base CDN GitHub Release pour PDFs lourds */
-const BASE_PDF = "https://github.com/Prudence-ui/BDFLIX/releases/download/v1-pdfs/";
+/* 🔗 BASE APPWRITE (VIEW = affichage, pas download) */
+const APPWRITE = {
+  endpoint: "https://nyc.cloud.appwrite.io/v1",
+  project: "6987071c000bff9156a3",
+  bucket: "pdfs"
+};
 
+/* 📚 base des BD */
 const bds = {
   1: { titre: "MORPHEUCUK", image: "images/bd1.jpg", chapitres: 11 },
   2: { titre: "TOMB RAIDER", image: "images/bd2.jpg", chapitres: 8 },
@@ -27,14 +32,14 @@ const bds = {
   20:{ titre: "LA BORDEL DU QUARTIER", image: "images/bd20.jpg", chapitres: 20 }
 };
 
-// 🔒 sécurité
+/* 🔒 sécurité */
 const bd = bds[bdId];
 if (!bd) {
   alert("BD introuvable");
   location.href = "index.html";
 }
 
-// 🎨 infos BD
+/* 🎨 infos BD */
 document.getElementById("titre").textContent = bd.titre;
 document.getElementById("cover").src = bd.image;
 
@@ -43,19 +48,22 @@ let chapitre = 1;
 const viewer = document.getElementById("pdf-viewer");
 const chapitreTitle = document.getElementById("chapitre-title");
 
-// 📖 charge chapitre depuis CDN (rapide + illimité)
+/* 📖 charge chapitre depuis Appwrite */
 function chargerChapitre() {
   chapitreTitle.textContent = `📖 Chapitre ${chapitre}`;
 
+  const fileId = `bd${bdId}-chapitre${chapitre}`;
+
   viewer.src =
-    `${BASE_PDF}bd${bdId}-chapitre${chapitre}.pdf` +
+    `${APPWRITE.endpoint}/storage/buckets/${APPWRITE.bucket}` +
+    `/files/${fileId}/view?project=${APPWRITE.project}` +
     `#toolbar=0&navpanes=0&scrollbar=0`;
 }
 
-// premier affichage
+/* premier affichage */
 chargerChapitre();
 
-// ➡️ chapitre suivant avec pub
+/* ➡️ chapitre suivant avec pub */
 document.getElementById("nextBtn").onclick = () => {
   if (chapitre >= bd.chapitres) {
     alert("📚 Fin de la BD !");
@@ -68,7 +76,7 @@ document.getElementById("nextBtn").onclick = () => {
   });
 };
 
-// 📺 publicité interstitielle
+/* 📺 publicité interstitielle */
 function afficherPub(next) {
   const ad = document.createElement("div");
 
@@ -124,38 +132,5 @@ function afficherPub(next) {
   };
 }
 
-// 🚫 anti clic droit
+/* 🚫 anti clic droit */
 document.addEventListener("contextmenu", e => e.preventDefault());
-
-/* 📩 contact */
-function ouvrirContact() {
-  const box = document.getElementById("contact-box");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-async function envoyerMessage() {
-  const email = document.getElementById("contact-email").value;
-  const message = document.getElementById("contact-message").value;
-  const status = document.getElementById("contact-status");
-
-  if (!email || !message) {
-    status.textContent = "Remplissez tous les champs";
-    return;
-  }
-
-  status.textContent = "Envoi en cours...";
-
-  const res = await fetch("/contact", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, message })
-  });
-
-  const data = await res.json();
-
-  if (data.success) {
-    status.textContent = "✅ Message envoyé !";
-  } else {
-    status.textContent = "❌ Erreur : " + (data.error || "envoi impossible");
-  }
-}

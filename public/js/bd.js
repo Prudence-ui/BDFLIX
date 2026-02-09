@@ -44,9 +44,19 @@ let chapitre = 1;
 const viewer = document.getElementById("pdf-viewer");
 const chapitreTitle = document.getElementById("chapitre-title");
 
-/* 🔗 MAPPING GOOGLE DRIVE (BD 1 – chapitre 1 pour l’instant) */
+/* 🔗 MAPPING GOOGLE DRIVE — BD1 COMPLET */
 const driveFiles = {
-  "1-1": "1OeaglTla4wpA4iz59dgPUThYw7j8LEhz"
+  "1-1": "1OeaglTla4wpA4iz59dgPUThYw7j8LEhz",
+  "1-2": "1v6ljEGT8B7POLf1OyPG-zZSlsND13baY",
+  "1-3": "18pHV42Szh0wmvb1anGcVhrHWfWHkeqZy",
+  "1-4": "1DPtDGHJyViaA1HvPhnZxjjsW61EkKpaa",
+  "1-5": "1eI3RLoC_S27tsENILnaLwO1VdLj20kiO",
+  "1-6": "1TMgB96rT0mstY0JDDrZ9W1anm2gP4RTf",
+  "1-7": "1sKOtMyKIeATgQXxURBrBfaIKstaI-kAZ",
+  "1-8": "1QnovBADtFCC9_pVInLcLf1TTm2Zntcpc",
+  "1-9": "1mih0UHQ7cKHDFt2qy6RG5kfIRdVHmW1g",
+  "1-10": "1YSp0Bj20ugGQmWyNX7kZP0U44Le1EIyc",
+  "1-11": "1D1-xIE1ds73wb_f81aVGEcsClB6SwrrK"
 };
 
 /* 📖 charge chapitre */

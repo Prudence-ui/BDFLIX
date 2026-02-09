@@ -44,8 +44,9 @@ let chapitre = 1;
 const viewer = document.getElementById("pdf-viewer");
 const chapitreTitle = document.getElementById("chapitre-title");
 
-/* 🔗 MAPPING GOOGLE DRIVE — BD1 COMPLET */
+/* 🔗 MAPPING GOOGLE DRIVE */
 const driveFiles = {
+  /* ===== BD 1 ===== */
   "1-1": "1OeaglTla4wpA4iz59dgPUThYw7j8LEhz",
   "1-2": "1v6ljEGT8B7POLf1OyPG-zZSlsND13baY",
   "1-3": "18pHV42Szh0wmvb1anGcVhrHWfWHkeqZy",
@@ -56,7 +57,17 @@ const driveFiles = {
   "1-8": "1QnovBADtFCC9_pVInLcLf1TTm2Zntcpc",
   "1-9": "1mih0UHQ7cKHDFt2qy6RG5kfIRdVHmW1g",
   "1-10": "1YSp0Bj20ugGQmWyNX7kZP0U44Le1EIyc",
-  "1-11": "1D1-xIE1ds73wb_f81aVGEcsClB6SwrrK"
+  "1-11": "1D1-xIE1ds73wb_f81aVGEcsClB6SwrrK",
+
+  /* ===== BD 2 ===== */
+  "2-1": "1NBuiLxvEHnfOVi5vhHuHSTsZCkT4T7hH",
+  "2-2": "1rO8WwSpRr-bnPmB_oj7nfbZ0q8wPd6bm",
+  "2-3": "1u-Lo7iDZ_z_ugCvL4MwlcsuAZnj3Snq6",
+  "2-4": "10xuKbqt3nOilibFY5OcWakcJUWN6qSJF",
+  "2-5": "1ZNzfwMaM0SVdmi9Tvl4HGsJVkRr0whwh",
+  "2-6": "1f3T4myGvnnHCcmWTIkulHf5h4CyhCh9Z",
+  "2-7": "13M_mz88dfUB3CMIcN-Buj3-vsfkS47zG",
+  "2-8": "1WhdW60fiAA87HXHgIZJxgSxK7L5aNxXk"
 };
 
 /* 📖 charge chapitre */

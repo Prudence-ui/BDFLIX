@@ -105,7 +105,21 @@ const driveFiles = {
   "4-18":"1TxxB4mgS92zfJgY-nAqdORGOfkGHHlh-",
   "4-19":"1cVsSSmmbDZUJfPd2SLuCk7dqCUmSHyO5",
   "4-20":"191QPzYDpZpoUgCCzY0h6nJXmMZHgUmSS",
-  "4-21":"1iWBmdtQ_Kzbety14Fd32WjHkZw3HQKW6"
+  "4-21":"1iWBmdtQ_Kzbety14Fd32WjHkZw3HQKW6",
+
+  /* ===== BD 5 ===== */
+  "5-1":"1PqfApDZhwd0V8NQHs8-nmpc9Yj_ziNCZ",
+  "5-2":"1Dh_InOYPJUR47yYAm8_E9WZigroGYBa3",
+  "5-3":"1DMrqwDDtd24ncRx2uTwF1IydF57P7hI3",
+  "5-4":"19ltrgl6I7RuzFjB4xe2jNE1OTm3OL7jg",
+  "5-5":"1BQm7bL3xt5thpwxD_MfszQgZqr7naRAi",
+  "5-6":"1NYRpAkNjGGGOaZ-9ALaowZWX9qg4_rp6",
+  "5-7":"1WN7NJdPGcuuLRi1Rgfbu7M0CZ7HhemUc",
+  "5-8":"12A066xoSpRCR-FIQ8ZyND9cENsJ5Sq79",
+  "5-9":"15IA4dN-9z67EpWtEEtQW1751EltTAe8c",
+  "5-10":"1wPvleo7vnoLlMEyc01hjKhJg6rQhlQeo",
+  "5-11":"1X6ubs1WbBFeu-lIoCvUtEZ14KJAqzmu8",
+  "5-12":"19WV8WnC0fKRM7h8wQaPWpPehUaqhRp3Y"
 };
 
 /* 📖 charge chapitre */
@@ -126,7 +140,7 @@ function chargerChapitre() {
 /* premier affichage */
 chargerChapitre();
 
-/* ➡️ chapitre suivant + pub */
+/* ➡️ chapitre suivant avec pub */
 document.getElementById("nextBtn").onclick = () => {
   if (chapitre >= bd.chapitres) {
     alert("📚 Fin de la BD !");

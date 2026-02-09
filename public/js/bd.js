@@ -1,31 +1,31 @@
 const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
-/* 📚 BASE GOOGLE DRIVE (preview = affichage, pas download) */
+/* 📚 BASE GOOGLE DRIVE */
 const GOOGLE_DRIVE_BASE = "https://drive.google.com/file/d/";
 
-/* 📚 base des BD */
+/* 📚 liste des BD */
 const bds = {
-  1: { titre: "MORPHEUCUK", image: "images/bd1.jpg", chapitres: 11 },
-  2: { titre: "TOMB RAIDER", image: "images/bd2.jpg", chapitres: 8 },
-  3: { titre: "MIRANDA", image: "images/bd3.jpg", chapitres: 13 },
-  4: { titre: "THE SHEPHERD'S WIFE", image: "images/bd4.jpg", chapitres: 21 },
-  5: { titre: "ISOLEE", image: "images/bd5.jpg", chapitres: 12 },
-  6: { titre: "SISTER GRACE", image: "images/bd6.jpg", chapitres: 4 },
-  7: { titre: "LOUISE", image: "images/bd7.jpg", chapitres: 22 },
-  8: { titre: "FAMILY SINS", image: "images/bd8.jpg", chapitres: 5 },
-  9: { titre: "DADDY", image: "images/bd9.jpg", chapitres: 4 },
-  10:{ titre: "MOM'S HELP", image: "images/bd10.jpg", chapitres: 3 },
-  11:{ titre: "DESIR FORBIDDEN", image: "images/bd11.jpg", chapitres: 6 },
-  12:{ titre: "LISTE DE VIE", image: "images/bd12.jpg", chapitres: 7 },
-  13:{ titre: "FATHER", image: "images/bd13.jpg", chapitres: 2 },
-  14:{ titre: "HELENA", image: "images/bd14.jpg", chapitres: 4 },
-  15:{ titre: "DETENTION", image: "images/bd15.jpg", chapitres: 2 },
-  16:{ titre: "LES BLACKS", image: "images/bd16.jpg", chapitres: 5 },
-  17:{ titre: "DESIRE", image: "images/bd17.jpg", chapitres: 4 },
-  18:{ titre: "EN COLLE", image: "images/bd18.jpg", chapitres: 13 },
-  19:{ titre: "INCESTE", image: "images/bd19.jpg", chapitres: 14 },
-  20:{ titre: "LA BORDEL DU QUARTIER", image: "images/bd20.jpg", chapitres: 20 }
+  1:{ titre:"MORPHEUCUK", image:"images/bd1.jpg", chapitres:11 },
+  2:{ titre:"TOMB RAIDER", image:"images/bd2.jpg", chapitres:8 },
+  3:{ titre:"MIRANDA", image:"images/bd3.jpg", chapitres:13 },
+  4:{ titre:"THE SHEPHERD'S WIFE", image:"images/bd4.jpg", chapitres:21 },
+  5:{ titre:"ISOLEE", image:"images/bd5.jpg", chapitres:12 },
+  6:{ titre:"SISTER GRACE", image:"images/bd6.jpg", chapitres:4 },
+  7:{ titre:"LOUISE", image:"images/bd7.jpg", chapitres:22 },
+  8:{ titre:"FAMILY SINS", image:"images/bd8.jpg", chapitres:5 },
+  9:{ titre:"DADDY", image:"images/bd9.jpg", chapitres:4 },
+  10:{ titre:"MOM'S HELP", image:"images/bd10.jpg", chapitres:3 },
+  11:{ titre:"DESIR FORBIDDEN", image:"images/bd11.jpg", chapitres:6 },
+  12:{ titre:"LISTE DE VIE", image:"images/bd12.jpg", chapitres:7 },
+  13:{ titre:"FATHER", image:"images/bd13.jpg", chapitres:2 },
+  14:{ titre:"HELENA", image:"images/bd14.jpg", chapitres:4 },
+  15:{ titre:"DETENTION", image:"images/bd15.jpg", chapitres:2 },
+  16:{ titre:"LES BLACKS", image:"images/bd16.jpg", chapitres:5 },
+  17:{ titre:"DESIRE", image:"images/bd17.jpg", chapitres:4 },
+  18:{ titre:"EN COLLE", image:"images/bd18.jpg", chapitres:13 },
+  19:{ titre:"INCESTE", image:"images/bd19.jpg", chapitres:14 },
+  20:{ titre:"LA BORDEL DU QUARTIER", image:"images/bd20.jpg", chapitres:20 }
 };
 
 /* 🔒 sécurité */
@@ -35,7 +35,7 @@ if (!bd) {
   location.href = "index.html";
 }
 
-/* 🎨 infos BD */
+/* 🎨 affichage infos */
 document.getElementById("titre").textContent = bd.titre;
 document.getElementById("cover").src = bd.image;
 
@@ -43,7 +43,7 @@ let chapitre = 1;
 const viewer = document.getElementById("pdf-viewer");
 const chapitreTitle = document.getElementById("chapitre-title");
 
-/* 🔗 MAPPING GOOGLE DRIVE */
+/* 🔗 GOOGLE DRIVE FILES */
 const driveFiles = {
 
   /* ===== BD 1 ===== */
@@ -119,10 +119,16 @@ const driveFiles = {
   "5-9":"15IA4dN-9z67EpWtEEtQW1751EltTAe8c",
   "5-10":"1wPvleo7vnoLlMEyc01hjKhJg6rQhlQeo",
   "5-11":"1X6ubs1WbBFeu-lIoCvUtEZ14KJAqzmu8",
-  "5-12":"19WV8WnC0fKRM7h8wQaPWpPehUaqhRp3Y"
+  "5-12":"19WV8WnC0fKRM7h8wQaPWpPehUaqhRp3Y",
+
+  /* ===== BD 6 ===== */
+  "6-1":"1BwWLyK7MLWkUv669G3D-r7zo2urSphx5",
+  "6-2":"1MZ3kvg4BWmbomEngxUOMs_qvE73jKr5g",
+  "6-3":"1rR1g-3Axs3BXFcl2DbCPu9OyFxoor79D",
+  "6-4":"1LDjVXEafW5sPZVNzvChFObotjp_xxBSY"
 };
 
-/* 📖 charge chapitre */
+/* 📖 charger chapitre */
 function chargerChapitre() {
   chapitreTitle.textContent = `📖 Chapitre ${chapitre}`;
   const key = `${bdId}-${chapitre}`;
@@ -137,7 +143,7 @@ function chargerChapitre() {
   viewer.src = `${GOOGLE_DRIVE_BASE}${fileId}/preview`;
 }
 
-/* premier affichage */
+/* affichage initial */
 chargerChapitre();
 
 /* ➡️ chapitre suivant avec pub */
@@ -156,16 +162,10 @@ document.getElementById("nextBtn").onclick = () => {
 function afficherPub(next) {
   const ad = document.createElement("div");
   ad.style = `
-    position:fixed;
-    inset:0;
-    background:#000;
-    color:white;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    font-size:26px;
-    z-index:9999;
+    position:fixed; inset:0; background:#000; color:#fff;
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    font-size:26px; z-index:9999;
   `;
 
   let time = 10;

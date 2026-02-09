@@ -149,7 +149,21 @@ const driveFiles = {
   "7-19":"1Ky7SN8r3wZoW0R15FzJf7VMPm5diQffh",
   "7-20":"1ZFuo0M1ue3FrZPvd1AD3M3k74GpJdyT-",
   "7-21":"14C0c89Ix95eSAJ0YMdIPvSX6f-g5baRN",
-  "7-22":"1ylkoIL3wpiO0o4MAytQSKY44WdOUWAQ8"
+  "7-22":"1ylkoIL3wpiO0o4MAytQSKY44WdOUWAQ8",
+
+  /* ===== BD 8 ===== */
+  "8-1":"1E4BZ9NjQBRhpkMUZtzOa-eNekXeizkRT",
+  "8-2":"1-VontMaOWJGhlNPoxW9TsQeM-C_3Hasq",
+  "8-3":"1P0bQ2bfFyMVk2dNUuqj_wvkkXcY26UI9",
+  "8-4":"16N0StGJzUbZBB56xKxXoFcm_wBXHTGFn",
+  "8-5":"1d8ExNaLHJ10jNSPypqOxPP4crE8NAyZ_",
+
+   /* ===== BD 9 ===== */
+  "9-1":"1unfnLakAgCAFsLECg5EKw__Kc5KD3-U9",
+  "9-2":"1Qel06bfhCZmaTF1hSFDBjMq6l7AFCiuM",
+  "9-3":"1inHdG-SoVpx0aTjupSWfiEwdo7m_hubK",
+  "9-4":"1eevRufbh54eQ6FQcuY6hVVXqsXNi2XS8",
+
 };
 
 /* 📖 charger chapitre */

@@ -1,12 +1,8 @@
 const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
-/* 🔗 BASE APPWRITE (VIEW = affichage, pas download) */
-const APPWRITE = {
-  endpoint: "https://nyc.cloud.appwrite.io/v1",
-  project: "6987071c000bff9156a3",
-  bucket: "pdfs"
-};
+/* 📚 BASE GOOGLE DRIVE (preview = affichage, pas download) */
+const GOOGLE_DRIVE_BASE = "https://drive.google.com/file/d/";
 
 /* 📚 base des BD */
 const bds = {
@@ -48,16 +44,25 @@ let chapitre = 1;
 const viewer = document.getElementById("pdf-viewer");
 const chapitreTitle = document.getElementById("chapitre-title");
 
-/* 📖 charge chapitre depuis Appwrite */
+/* 🔗 MAPPING GOOGLE DRIVE (BD 1 – chapitre 1 pour l’instant) */
+const driveFiles = {
+  "1-1": "1OeaglTla4wpA4iz59dgPUThYw7j8LEhz"
+};
+
+/* 📖 charge chapitre */
 function chargerChapitre() {
   chapitreTitle.textContent = `📖 Chapitre ${chapitre}`;
 
-  const fileId = `bd${bdId}-chapitre${chapitre}`;
+  const key = `${bdId}-${chapitre}`;
+  const fileId = driveFiles[key];
 
-  viewer.src =
-    `${APPWRITE.endpoint}/storage/buckets/${APPWRITE.bucket}` +
-    `/files/${fileId}/view?project=${APPWRITE.project}` +
-    `#toolbar=0&navpanes=0&scrollbar=0`;
+  if (!fileId) {
+    viewer.src = "";
+    chapitreTitle.textContent = "❌ Chapitre non disponible";
+    return;
+  }
+
+  viewer.src = `${GOOGLE_DRIVE_BASE}${fileId}/preview`;
 }
 
 /* premier affichage */
@@ -76,7 +81,7 @@ document.getElementById("nextBtn").onclick = () => {
   });
 };
 
-/* 📺 publicité interstitielle */
+/* 📺 publicité */
 function afficherPub(next) {
   const ad = document.createElement("div");
 
@@ -93,7 +98,7 @@ function afficherPub(next) {
     z-index:9999;
   `;
 
-  let time = 25;
+  let time = 10;
 
   ad.innerHTML = `
     <p id="timer">📺 Publicité... ${time}s</p>

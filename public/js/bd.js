@@ -86,7 +86,13 @@ const driveFiles = {
   "16-2":"1SJ4wUdSkprfFVm9BzDGwU0U9Y6oeNT0n",
   "16-3":"1HGQuRAL_siooItO2_zvblyavdH1kKcTJ",
   "16-4":"1OcymmeJbA7ZnErxdxBdCT-DFK4zEIOoA",
-  "16-5":"18fEnPDzjT-8gFHkDRD1XB7MvthU6H_nS"
+  "16-5":"18fEnPDzjT-8gFHkDRD1XB7MvthU6H_nS",
+
+   /* ===== BD 17 ===== */
+  "17-1":"1etRT4xWVsekJHAOL98GnMoIOsMqmyMd2",
+  "17-2":"1E41t1-94z81XAefXXuxGznPLm9NghqVL",
+  "17-3":"1lYev-EGAqdXVybVgXH1tjbP2iApEdVYR",
+  "17-4":"12Q74BTG8fmbg143zVSsGI-7eOP_3G0hm"
 };
 
 /* 📖 charger chapitre */

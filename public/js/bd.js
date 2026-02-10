@@ -92,7 +92,22 @@ const driveFiles = {
   "17-1":"1etRT4xWVsekJHAOL98GnMoIOsMqmyMd2",
   "17-2":"1E41t1-94z81XAefXXuxGznPLm9NghqVL",
   "17-3":"1lYev-EGAqdXVybVgXH1tjbP2iApEdVYR",
-  "17-4":"12Q74BTG8fmbg143zVSsGI-7eOP_3G0hm"
+  "17-4":"12Q74BTG8fmbg143zVSsGI-7eOP_3G0hm",
+
+   /* ===== BD 18 ===== */
+  "18-1":"13POnscwv2UKyEoQQfxO3x7NYYA223h9m",
+  "18-2":"1WFbsXLg25wh_DP7sXggQ6Ly1Rc2w52p_",
+  "18-3":"1i9w3Zg-QCKtNGoaXuL5k2lThM4pwEmRe",
+  "18-4":"1e4_2Eb3B8lkipFrpMoFXWVnNEzQzjYqo",
+  "18-5":"1rRKFNzZtY2CoSIe2G3mx2h4uTb88w8C5",
+  "18-6":"1pPhEMvoc25TlWjdGd4aHL1l9qUnav84G",
+  "18-7":"1ZrGAOqQZ4E9_QSlBBfL74kw8I_XS071Y",
+  "18-8":"1wucJinpMPNZgBmqYzpZH4ftBJ5pBfgIF",
+  "18-9":"1cDrAWkVIgkvTd7ZADOS0EAI10tjurCQr",
+  "18-10":"1oqQHvrx1oODydLDnkICd_IzfXwMbs6Ez",
+  "18-11":"1uXAZ7qlI87meVs2fdLO0DBg7xxwLSHNP",
+  "18-12":"14I3iwRt3EWTHN8hnukg1fVh9T_ZpanQT",
+  "18-13":"1_42X0vo6mkc-BpEBC-YycNhD3tVjHpJ7"
 };
 
 /* 📖 charger chapitre */

@@ -123,7 +123,29 @@ const driveFiles = {
   "19-11":"15VEt_dzgXxaJrj_PdBgMTMylTYg_Fi1A",
   "19-12":"1vWFZT_vk2wKQKAxutKkwds7YPL2HFrUy",
   "19-13":"1b1zdzNJdSvGXRkS8c_40EDFpu7ZOAtJO",
-  "19-14":"1pR5l69Az3D95IZbWVIC3prwhPToXw3rP"
+  "19-14":"1pR5l69Az3D95IZbWVIC3prwhPToXw3rP",
+
+   /* ===== BD 20 ===== */
+  "20-1":"1VUBGcaQ7Kyuu8mryGSeQ_t9EEO24urHp",
+  "20-2":"1iRCTXaekjwV8jc8ByEKmTDp_7TJTxZUL",
+  "20-3":"1nqOUVUNImyDU5KGWcJDdLoHbdmhoZVAp",
+  "20-4":"1KLFjwbCsLnyP7A1lQKRe3q6NYp3DTXV8",
+  "20-5":"1EhTgEatUmRV18AfItXoEqmiKphti-Ejs",
+  "20-6":"1E-wWnpSrABhZxeo-xYgi3Oc4Jql_6VOO",
+  "20-7":"1xK5pBAV6U7BAM15s7GqHmu_VMfPxhxp4",
+  "20-8":"11WEEjCQSYmACIK6TIKQg1oMuhWf8Lb0P",
+  "20-9":"1Br8sjJxZXidg8AkkdrQGpEIRgkwCfl49",
+  "20-10":"1TAb1bdimGu06TCGZfQu7rdkTPOojl617",
+  "20-11":"1j6LA24qUICuEbB8xmUfBQrLMi8jiTtW2",
+  "20-12":"1uuAemId5bjhum0cMhV2jpeDQTlg3LV9p",
+  "20-13":"1qtJv3_EISvVx_l65lpyHJmOVATCGRBGv",
+  "20-14":"1CRPWquB0AdzaFpXgIeKXHtjIGkJXGe_z",
+  "20-15":"1IvUz_V-QQJbISUd6El7OBiSvr27rpJf7",
+  "20-16":"1BVMtbn7SWPqKoQ6BEWqQ0vHXvXI92PGl",
+  "20-17":"1rLXBRtEomlAsCFP3VWs6UFn7_QgyyPk7",
+  "20-18":"1Rsw1ZYUZmkH0T9wal9Gb82KjWDZUTQz9",
+  "20-19":"1JEn1AropczSqyoP0H2Gvh8pHNVILtjnE",
+  "20-20":"19y9Vb9oAGK3k15vCBq6qldAjBIuBdr0W"
 };
 
 /* 📖 charger chapitre */

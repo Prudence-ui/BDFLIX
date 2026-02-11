@@ -39,6 +39,7 @@ const categories = [
   }
 ];
 
+/* 🎨 Génération des cartes */
 categories.forEach(({ id, bds }) => {
   const container = document.getElementById(id);
   if (!container) return;
@@ -66,3 +67,35 @@ categories.forEach(({ id, bds }) => {
 
   container.appendChild(fragment);
 });
+
+/* 🔎 RECHERCHE BD */
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+  searchInput.addEventListener("input", function() {
+    const value = this.value.toLowerCase();
+    const cards = document.querySelectorAll(".bd-card");
+
+    cards.forEach(card => {
+      const title = card.querySelector("h4").textContent.toLowerCase();
+
+      if (title.includes(value)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+}
+
+/* ❌ Bouton clear */
+const clearBtn = document.getElementById("clearSearch");
+
+if (clearBtn && searchInput) {
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.dispatchEvent(new Event("input"));
+    searchInput.focus();
+  });
+}
+

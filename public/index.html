@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>BDflix</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>BDflix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="preconnect" href="/">
-<link rel="dns-prefetch" href="/">
+  <link rel="preconnect" href="/">
+  <link rel="dns-prefetch" href="/">
 
-<link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
 <header class="navbar">
 
+  <!-- Bouton Accueil -->
   <button class="home-btn" onclick="window.location.href='index.html'">
     Accueil
   </button>
 
+  <!-- 🔎 Barre de recherche Premium -->
+<div class="search-container">
+  
+  <span class="search-icon">🔎</span>
+  
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Rechercher une BD..."
+    autocomplete="off"
+  >
+
+  <span class="clear-btn" id="clearSearch">✖</span>
+
+</div>
+
+
+  <!-- Logo -->
   <h1 class="logo">BDflix</h1>
 
 </header>
@@ -27,10 +47,12 @@
   📢 ESPACE PUBLICITAIRE
 </div>
 
+<!-- Bannière principale -->
 <section class="banner">
-  <h2>BD INTENSES , DROLES ET PLEINES DE PASSION</h2>
+  <h2>BD INTENSES, DRÔLES ET PLEINES DE PASSION</h2>
 </section>
 
+<!-- Catégories -->
 <div class="category">
   <h3>🔥 Populaires</h3>
   <div class="row" id="popular"></div>
@@ -46,6 +68,8 @@
   <div class="row" id="recommended"></div>
 </div>
 
+<!-- Script -->
 <script src="js/app.js" defer></script>
+
 </body>
 </html>

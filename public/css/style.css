@@ -290,8 +290,8 @@ body {
 }
 
 .search-container input {
-  width: 100%;
-  padding: 10px 40px 10px 38px;
+  width: 65%;
+  padding: 10px 40px 10px 10px;
   border-radius: 30px;
   border: 2px solid transparent;
   outline: none;

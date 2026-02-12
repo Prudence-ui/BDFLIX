@@ -4,29 +4,34 @@ const bdId = params.get("id");
 /* 📚 BASE GOOGLE DRIVE */
 const GOOGLE_DRIVE_BASE = "https://drive.google.com/file/d/";
 
+/* ⚡ Cloudinary CDN */
+const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/";
+
 /* 📚 liste des BD */
 const bds = {
-  1:{ titre:"MORPHEUCUK", image:"images/bd1.jpg", chapitres:11 },
-  2:{ titre:"TOMB RAIDER", image:"images/bd2.jpg", chapitres:8 },
-  3:{ titre:"MIRANDA", image:"images/bd3.jpg", chapitres:13 },
-  4:{ titre:"THE SHEPHERD'S WIFE", image:"images/bd4.jpg", chapitres:21 },
-  5:{ titre:"ISOLEE", image:"images/bd5.jpg", chapitres:12 },
-  6:{ titre:"SISTER GRACE", image:"images/bd6.jpg", chapitres:4 },
-  7:{ titre:"LOUISE", image:"images/bd7.jpg", chapitres:22 },
-  8:{ titre:"FAMILY SINS", image:"images/bd8.jpg", chapitres:5 },
-  9:{ titre:"DADDY", image:"images/bd9.jpg", chapitres:4 },
-  10:{ titre:"MOM'S HELP", image:"images/bd10.jpg", chapitres:3 },
-  11:{ titre:"DESIR FORBIDDEN", image:"images/bd11.jpg", chapitres:6 },
-  12:{ titre:"LISTE DE VIE", image:"images/bd12.jpg", chapitres:7 },
-  13:{ titre:"FATHER", image:"images/bd13.jpg", chapitres:2 },
-  14:{ titre:"HELENA", image:"images/bd14.jpg", chapitres:4 },
-  15:{ titre:"DETENTION", image:"images/bd15.jpg", chapitres:2 },
-  16:{ titre:"LES BLACKS", image:"images/bd16.jpg", chapitres:5 },
-  17:{ titre:"DESIRE", image:"images/bd17.jpg", chapitres:4 },
-  18:{ titre:"EN COLLE", image:"images/bd18.jpg", chapitres:13 },
-  19:{ titre:"INCESTE", image:"images/bd19.jpg", chapitres:14 },
-  20:{ titre:"LA BORDEL DU QUARTIER", image:"images/bd20.jpg", chapitres:20 }
+  1:{ titre:"MORPHEUCUK", image:CDN+"v1770055741/bd1_vhkz0m.jpg", chapitres:11 },
+  2:{ titre:"TOMB RAIDER", image:CDN+"v1770055739/bd2_nexzqc.jpg", chapitres:8 },
+  3:{ titre:"MIRANDA", image:CDN+"v1770055735/bd3_jqxcil.jpg", chapitres:13 },
+  4:{ titre:"THE SHEPHERD'S WIFE", image:CDN+"v1770055736/bd4_xr7ltr.jpg", chapitres:21 },
+  5:{ titre:"ISOLEE", image:CDN+"v1770055741/bd5_mm6gwh.jpg", chapitres:12 },
+  6:{ titre:"SISTER GRACE", image:CDN+"v1770055749/bd6_kowuwf.jpg", chapitres:4 },
+  7:{ titre:"LOUISE", image:CDN+"v1770055738/bd7_heqzfx.jpg", chapitres:22 },
+  8:{ titre:"FAMILY SINS", image:CDN+"v1770055747/bd8_caxdoe.jpg", chapitres:5 },
+  9:{ titre:"DADDY", image:CDN+"v1770055746/bd9_gnuyhd.jpg", chapitres:4 },
+  10:{ titre:"MOM'S HELP", image:CDN+"v1770055748/bd10_vtij6z.jpg", chapitres:3 },
+  11:{ titre:"DESIR FORBIDDEN", image:CDN+"v1770055743/bd11_q4ne9o.jpg", chapitres:6 },
+  12:{ titre:"LISTE DE VIE", image:CDN+"v1770055743/bd12_irq7fw.jpg", chapitres:7 },
+  13:{ titre:"FATHER", image:CDN+"v1770055743/bd13_cdimxi.jpg", chapitres:2 },
+  14:{ titre:"HELENA", image:CDN+"v1770055743/bd14_foz8sf.jpg", chapitres:4 },
+  15:{ titre:"DETENTION", image:CDN+"v1770055743/bd15_ubrp04.jpg", chapitres:2 },
+  16:{ titre:"LES BLACKS", image:CDN+"v1770055738/bd16_axm9uh.jpg", chapitres:5 },
+  17:{ titre:"DESIRE", image:CDN+"v1770055735/bd17_jymdgk.jpg", chapitres:4 },
+  18:{ titre:"EN COLLE", image:CDN+"v1770055746/bd18_x5ebll.jpg", chapitres:13 },
+  19:{ titre:"INCESTE", image:CDN+"v1770055738/bd19_ketlbr.jpg", chapitres:14 },
+  20:{ titre:"LA BORDEL DU QUARTIER", image:CDN+"v1770055738/bd20_i0bhwd.jpg", chapitres:20 }
 };
+
+
 
 /* 🔒 sécurité */
 const bd = bds[bdId];
@@ -345,3 +350,6 @@ function afficherPub(next) {
 
 /* 🚫 anti clic droit */
 document.addEventListener("contextmenu", e => e.preventDefault());
+
+
+

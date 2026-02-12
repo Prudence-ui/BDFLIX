@@ -284,13 +284,13 @@ body {
 
 .search-container {
   position: relative;
-  width: 280px;
+  width: 180px;
   display: flex;
   align-items: center;
 }
 
 .search-container input {
-  width: 65%;
+  width: 100%;
   padding: 10px 40px 10px 10px;
   border-radius: 30px;
   border: 2px solid transparent;

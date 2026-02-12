@@ -3,41 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>Lecture BD</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
 <header class="navbar">
-
   <button class="home-btn" onclick="window.location.href='index.html'">
     ⬅ Accueil
   </button>
-
   <h1 class="logo">BDflix</h1>
-
 </header>
 
-
-<!-- 📢 BANNIÈRE PUB -->
 <div class="ad-banner">
   📢 ESPACE PUBLICITAIRE
 </div>
 
-<!-- INFOS BD -->
 <section class="bd-details">
   <img id="cover" class="cover" alt="Couverture BD">
-
   <div class="info">
     <h2 id="titre"></h2>
     <p id="chapitre-title"></p>
   </div>
 </section>
 
-<!-- 📖 LECTEUR PDF -->
 <section id="pdf-section" style="padding:20px;">
   <iframe
     id="pdf-viewer"
@@ -45,7 +35,6 @@
   ></iframe>
 </section>
 
-<!-- ➡️ BOUTON SUIVANT -->
 <div style="text-align:center;margin:30px;">
   <button id="nextBtn" class="pay-btn">
     ▶ Chapitre suivant
@@ -55,14 +44,9 @@
 <script src="js/bd.js"></script>
 
 <script>
-  document.addEventListener("contextmenu", e => e.preventDefault());
-</script>
-
-<script>
-/* Bloque sélection */
+document.addEventListener("contextmenu", e => e.preventDefault());
 document.body.style.userSelect = "none";
 
-/* Bloque raccourcis courants */
 document.addEventListener("keydown", e => {
   if (
     e.key === "PrintScreen" ||
@@ -75,7 +59,6 @@ document.addEventListener("keydown", e => {
   }
 });
 
-/* Détection capture → écran noir */
 function afficherBlocage() {
   const block = document.createElement("div");
   block.style = `
@@ -85,34 +68,24 @@ function afficherBlocage() {
     z-index:999999;
   `;
   document.body.appendChild(block);
-
   setTimeout(() => block.remove(), 1500);
 }
 </script>
 
 <footer class="footer">
-
   <div class="footer-links">
     <button onclick="location.href='index.html'">🏠 Accueil</button>
     <button onclick="ouvrirContact()">📩 Contact</button>
   </div>
 
-  <!-- FORMULAIRE CONTACT -->
   <div id="contact-box" class="contact-box">
     <h3>Contactez-nous</h3>
-
     <input id="contact-email" type="email" placeholder="Votre email" required>
     <textarea id="contact-message" placeholder="Votre message" required></textarea>
-
     <button onclick="envoyerMessage()">Envoyer</button>
     <p id="contact-status"></p>
   </div>
-
 </footer>
-
-
-
-
 
 </body>
 </html>

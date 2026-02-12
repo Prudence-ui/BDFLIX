@@ -346,8 +346,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 18px 25px;
+  height: 70px; /* hauteur fixe élégante */
 }
+
 
 @media (max-width: 600px) {
   .search-container {

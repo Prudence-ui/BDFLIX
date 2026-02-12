@@ -5,7 +5,7 @@ const bdId = params.get("id");
 const GOOGLE_DRIVE_BASE = "https://drive.google.com/file/d/";
 
 /* ⚡ Cloudinary CDN */
-const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/";
+const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/f_auto,q_auto,w_400/";
 
 /* 📚 liste des BD */
 const bds = {
@@ -291,11 +291,24 @@ function chargerChapitre() {
     return;
   }
 
-  viewer.src = `${GOOGLE_DRIVE_BASE}${fileId}/preview`;
+    viewer.src = `${GOOGLE_DRIVE_BASE}${fileId}/preview?embedded=true`;
 }
 
 /* affichage initial */
 chargerChapitre();
+
+  /* 🚀 Préchargement chapitre suivant */
+  function preloadNext() {
+    const nextKey = `${bdId}-${chapitre + 1}`;
+    const nextFile = driveFiles[nextKey];
+    if (!nextFile) return;
+
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.href = `${GOOGLE_DRIVE_BASE}${nextFile}/preview`;
+    document.head.appendChild(link);
+  }
+
 
 /* ➡️ chapitre suivant avec pub */
 document.getElementById("nextBtn").onclick = () => {

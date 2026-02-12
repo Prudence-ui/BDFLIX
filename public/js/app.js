@@ -1,5 +1,5 @@
 // ⚡ Cloudinary CDN ultra rapide
-const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/";
+const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/f_auto,q_auto,w_400/";
 
 const categories = [
   {
@@ -51,7 +51,7 @@ categories.forEach(({ id, bds }) => {
     card.className = "bd-card";
 
     card.innerHTML = `
-      <img src="${image}" alt="${title}" loading="lazy" decoding="async">
+      <img src="${image}" alt="${title}" loading="lazy" decoding="async" fetchpriority="low">
       <div class="overlay">
         <h4>${title}</h4>
         <button>Voir</button>

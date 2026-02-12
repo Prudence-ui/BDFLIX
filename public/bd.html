@@ -90,5 +90,55 @@ function afficherBlocage() {
   </div>
 </footer>
 
+<script>
+function ouvrirContact() {
+  const box = document.getElementById("contact-box");
+  box.classList.toggle("active");
+}
+
+async function envoyerMessage() {
+  const email = document.getElementById("contact-email").value;
+  const message = document.getElementById("contact-message").value;
+  const status = document.getElementById("contact-status");
+
+  if (!email || !message) {
+    status.textContent = "Veuillez remplir tous les champs.";
+    status.style.color = "red";
+    return;
+  }
+
+  status.textContent = "Envoi en cours...";
+  status.style.color = "white";
+
+  try {
+    const response = await fetch("/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, message })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      status.textContent = "Message envoyé avec succès !";
+      status.style.color = "lightgreen";
+      document.getElementById("contact-email").value = "";
+      document.getElementById("contact-message").value = "";
+    } else {
+      status.textContent = "Erreur lors de l'envoi.";
+      status.style.color = "red";
+    }
+
+  } catch (error) {
+    status.textContent = "Erreur serveur.";
+    status.style.color = "red";
+  }
+}
+</script>
+
+
+
 </body>
 </html>

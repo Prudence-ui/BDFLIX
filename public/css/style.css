@@ -10,6 +10,7 @@ body {
   background-color: #141414;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
+  padding-top: 80px; /* évite que la navbar colle en haut */
 }
 
 /* ================= NAVBAR ================= */
@@ -17,14 +18,16 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 18px 30px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-  z-index: 10;
+  height: 70px;
+  padding: 0 30px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+  z-index: 1000;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
+/* Logo */
 .logo {
   color: #e50914;
   font-size: 28px;
@@ -35,6 +38,7 @@ body {
   animation: glowPulse 2s infinite alternate;
 }
 
+/* Home Button */
 .home-btn {
   background: transparent;
   color: white;
@@ -44,8 +48,6 @@ body {
   font-size: 14px;
   cursor: pointer;
   transition: 0.3s;
-  box-shadow: 0 0 8px rgba(229,9,20,0.7),
-              0 0 16px rgba(229,9,20,0.5);
 }
 
 .home-btn:hover {
@@ -59,7 +61,52 @@ body {
   to { filter: brightness(1.4); }
 }
 
-/* ================= BANNIÈRE PUB ================= */
+/* ================= SEARCH ================= */
+.search-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  transition: width 0.3s ease;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  outline: none;
+  font-size: 14px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  border: 2px solid #e50914;
+  box-shadow: 0 0 12px rgba(229,9,20,0.7);
+  background: rgba(255,255,255,0.12);
+  width: 200px;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.25s ease;
+  color: #e50914;
+}
+
+.search-container input:not(:placeholder-shown) ~ .clear-btn {
+  opacity: 1;
+}
+
+/* ================= PUB ================= */
 .ad-banner {
   width: 100%;
   height: 90px;
@@ -70,7 +117,7 @@ body {
   justify-content: center;
   font-size: 18px;
   font-weight: bold;
-  margin: 90px 0 25px;
+  margin: 20px 0 25px;
   border-radius: 12px;
 }
 
@@ -84,7 +131,6 @@ body {
   font-size: 22px;
 }
 
-/* 🔥 GRILLE 5 PAR LIGNE */
 #popular,
 #new,
 #recommended {
@@ -109,7 +155,6 @@ body {
   transition: transform 0.35s ease;
 }
 
-/* Overlay */
 .overlay {
   position: absolute;
   inset: 0;
@@ -144,17 +189,14 @@ body {
   opacity: 1;
 }
 
-/* Mobile show overlay */
 @media (hover:none) {
-  .overlay {
-    opacity: 1;
-  }
+  .overlay { opacity: 1; }
 }
 
 /* ================= BD PAGE ================= */
 .bd-details {
   display: flex;
-  padding: 130px 30px 20px;
+  padding: 40px 30px 20px;
   align-items: flex-start;
 }
 
@@ -167,10 +209,6 @@ body {
 .info h2 {
   font-size: 32px;
   margin-bottom: 8px;
-}
-
-#chapitre-title {
-  opacity: 0.8;
 }
 
 /* ================= PDF ================= */
@@ -186,7 +224,6 @@ body {
   border: none;
   border-radius: 12px;
   background: black;
-  user-select: none;
 }
 
 /* ================= BUTTON ================= */
@@ -232,10 +269,15 @@ body {
   font-weight: bold;
 }
 
+/* CONTACT */
 .contact-box {
   max-width: 400px;
   margin: 20px auto;
   display: none;
+}
+
+.contact-box.active {
+  display: block;
 }
 
 .contact-box input,
@@ -262,97 +304,26 @@ body {
   #popular,#new,#recommended {
     grid-template-columns: repeat(3, 1fr);
   }
-  .bd-card { height: 240px; }
 }
 
 @media (max-width: 700px) {
   #popular,#new,#recommended {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .bd-details {
     flex-direction: column;
     text-align: center;
     align-items: center;
   }
+
   .cover {
     margin: 0 0 20px;
   }
-  .bd-card { height: 200px; }
 }
-
-/* ================= SEARCH PREMIUM ================= */
-
-.search-container {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 140px;
-  transition: width 0.3s ease;
-}
-
-
-.search-container input {
-  width: 100%;
-  padding: 10px 40px 10px 10px;
-  border-radius: 30px;
-  border: 2px solid transparent;
-  outline: none;
-  font-size: 14px;
-  background: rgba(255,255,255,0.08);
-  color: white;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-}
-
-/* Focus effect premium */
-.search-container input:focus {
-  border: 2px solid #e50914;
-  box-shadow: 0 0 12px rgba(229,9,20,0.7);
-  background: rgba(255,255,255,0.12);
-  width: 180px;
-}
-
-/* 🔎 Icon */
-.search-icon {
-  position: absolute;
-  left: 14px;
-  font-size: 14px;
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-/* ❌ Clear Button */
-.clear-btn {
-  position: absolute;
-  right: 14px;
-  font-size: 13px;
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.25s ease;
-  color: #e50914;
-}
-
-.search-container input:not(:placeholder-shown) ~ .clear-btn {
-  opacity: 1;
-}
-
-/* Hover clear */
-.clear-btn:hover {
-  transform: scale(1.2);
-}
-
-.navbar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 25px;
-  height: 70px; /* hauteur fixe élégante */
-}
-
 
 @media (max-width: 600px) {
   .search-container {
-    width: 120px;
+    width: 130px;
   }
 }

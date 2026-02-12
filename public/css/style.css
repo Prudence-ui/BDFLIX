@@ -283,11 +283,13 @@ body {
 /* ================= SEARCH PREMIUM ================= */
 
 .search-container {
-  position: relative;
-  width: 180px;
-  display: flex;
-  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  transition: width 0.3s ease;
 }
+
 
 .search-container input {
   width: 100%;
@@ -307,6 +309,7 @@ body {
   border: 2px solid #e50914;
   box-shadow: 0 0 12px rgba(229,9,20,0.7);
   background: rgba(255,255,255,0.12);
+  width: 180px;
 }
 
 /* 🔎 Icon */
@@ -336,4 +339,18 @@ body {
 /* Hover clear */
 .clear-btn:hover {
   transform: scale(1.2);
+}
+
+.navbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+@media (max-width: 600px) {
+  .search-container {
+    width: 120px;
+  }
 }

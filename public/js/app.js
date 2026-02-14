@@ -9,7 +9,9 @@ const categories = [
       { id: 2, title: "Tomb Raider", image: CDN + "v1770055739/bd2_nexzqc.jpg" },
       { id: 3, title: "Miranda", image: CDN + "v1770055735/bd3_jqxcil.jpg" },
       { id: 4, title: "The shepherds wife", image: CDN + "v1770055736/bd4_xr7ltr.jpg" },
-      { id: 5, title: "Isolee", image: CDN + "v1770055741/bd5_mm6gwh.jpg" }
+      { id: 5, title: "Isolee", image: CDN + "v1770055741/bd5_mm6gwh.jpg" },
+      { id: 51, title: "Big Black Cocks", image: CDN + "v1771086646/bd51_th4gfj.jpg" }
+
     ]
   },
   {

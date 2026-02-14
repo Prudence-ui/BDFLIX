@@ -14,11 +14,14 @@ const bds = {
   3:{ titre:"MIRANDA", image:CDN+"v1770055735/bd3_jqxcil.jpg", chapitres:13 },
   4:{ titre:"THE SHEPHERD'S WIFE", image:CDN+"v1770055736/bd4_xr7ltr.jpg", chapitres:21 },
   5:{ titre:"ISOLEE", image:CDN+"v1770055741/bd5_mm6gwh.jpg", chapitres:12 },
+  51:{ titre:"BIG BLACK COCKS", image:CDN+"v1771086646/bd51_th4gfj.jpg", chapitres:7 },
+
   6:{ titre:"SISTER GRACE", image:CDN+"v1770055749/bd6_kowuwf.jpg", chapitres:4 },
   7:{ titre:"LOUISE", image:CDN+"v1770055738/bd7_heqzfx.jpg", chapitres:22 },
   8:{ titre:"FAMILY SINS", image:CDN+"v1770055747/bd8_caxdoe.jpg", chapitres:5 },
   9:{ titre:"DADDY", image:CDN+"v1770055746/bd9_gnuyhd.jpg", chapitres:4 },
   10:{ titre:"MOM'S HELP", image:CDN+"v1770055748/bd10_vtij6z.jpg", chapitres:3 },
+
   11:{ titre:"DESIR FORBIDDEN", image:CDN+"v1770055743/bd11_q4ne9o.jpg", chapitres:6 },
   12:{ titre:"LISTE DE VIE", image:CDN+"v1770055743/bd12_irq7fw.jpg", chapitres:7 },
   13:{ titre:"FATHER", image:CDN+"v1770055743/bd13_cdimxi.jpg", chapitres:2 },
@@ -51,7 +54,7 @@ const chapitreTitle = document.getElementById("chapitre-title");
 /* 🔗 GOOGLE DRIVE FILES */
 const driveFiles = {
 
-      /* ===== BD 11 ===== */
+      /* ===== BD 1 ===== */
   "1-1":"1OeaglTla4wpA4iz59dgPUThYw7j8LEhz",
   "1-2":"1v6ljEGT8B7POLf1OyPG-zZSlsND13baY",
   "1-3":"18pHV42Szh0wmvb1anGcVhrHWfWHkeqZy",
@@ -130,6 +133,16 @@ const driveFiles = {
   "5-10":"1wPvleo7vnoLlMEyc01hjKhJg6rQhlQeo",
   "5-11":"1X6ubs1WbBFeu-lIoCvUtEZ14KJAqzmu8",
   "5-12":"19WV8WnC0fKRM7h8wQaPWpPehUaqhRp3Y",
+
+
+      /* ===== BD 51 ===== */
+  "51-1":"1MyqXl-hAdZgbOOA3Bye9EUjZgaKlf1B_",
+  "51-2":"1pGNxbhlGUWUtIE6ZF1LX6CHb8r5CZih_",
+  "51-3":"1BemmWeEaW8NpNPqM9-1mS-ogvGJ5_wkl",
+  "51-4":"15-k_1R8Cq0wfwFeFohqsyQ-z0mdjRrta",
+  "51-5":"1jDxAOSHkOvrx0l9XMsbuioW5CelEvuNB",
+  "51-6":"1gGcvozKRLS7Frh3J2uiTfv1GpkKGziIk",
+  "51-7":"1M0JwBpYfSak41w5bBU5R0UIBkaCK8XzS",
 
     /* ===== BD 6 ===== */
   "6-1":"1BwWLyK7MLWkUv669G3D-r7zo2urSphx5",

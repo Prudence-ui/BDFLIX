@@ -1,6 +1,26 @@
 const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
+/* 📱 Detecte si on est dans l'application Android */
+function isAndroidApp() {
+  return typeof Android !== "undefined";
+}
+
+/* 📺 Lancer Rewarded Ad (si app mobile) */
+function showRewardedAd(callback) {
+
+  // Si on est dans l'application Android
+  if (isAndroidApp()) {
+    Android.showRewardedAd();
+    window.rewardCallback = callback;
+    return;
+  }
+
+  // Sinon fallback = pub web actuelle
+  afficherPub(callback);
+}
+
+
 /* 📚 BASE GOOGLE DRIVE */
 const GOOGLE_DRIVE_BASE = "https://drive.google.com/file/d/";
 
@@ -357,10 +377,11 @@ document.getElementById("nextBtn").onclick = () => {
     alert("📚 Fin de la BD !");
     return;
   }
-  afficherPub(() => {
-    chapitre++;
-    chargerChapitre();
+  showRewardedAd(() => {
+  chapitre++;
+  chargerChapitre();
   });
+
 };
 
 /* 📺 publicité */
@@ -404,6 +425,15 @@ function afficherPub(next) {
 
 /* 🚫 anti clic droit */
 document.addEventListener("contextmenu", e => e.preventDefault());
+
+/* ✅ appelé par Android quand la pub est terminée */
+function onRewardEarned() {
+  if (window.rewardCallback) {
+    window.rewardCallback();
+    window.rewardCallback = null;
+  }
+}
+
 
 
 

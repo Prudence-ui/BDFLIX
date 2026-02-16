@@ -21,7 +21,9 @@ const categories = [
       { id: 7, title: "Louise", image: CDN + "v1770055738/bd7_heqzfx.jpg" },
       { id: 8, title: "Family sins", image: CDN + "v1770055747/bd8_caxdoe.jpg" },
       { id: 9, title: "Daddy", image: CDN + "v1770055746/bd9_gnuyhd.jpg" },
-      { id: 10, title: "Mom’s Help", image: CDN + "v1770055748/bd10_vtij6z.jpg" }
+      { id: 10, title: "Mom’s Help", image: CDN + "v1770055748/bd10_vtij6z.jpg" },
+      { id: 101, title: "Velamma", image: CDN + "v1771238444/bd101_akkgl8.jpg" }
+
     ]
   },
   {

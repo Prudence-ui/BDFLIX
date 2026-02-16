@@ -21,6 +21,8 @@ const bds = {
   8:{ titre:"FAMILY SINS", image:CDN+"v1770055747/bd8_caxdoe.jpg", chapitres:5 },
   9:{ titre:"DADDY", image:CDN+"v1770055746/bd9_gnuyhd.jpg", chapitres:4 },
   10:{ titre:"MOM'S HELP", image:CDN+"v1770055748/bd10_vtij6z.jpg", chapitres:3 },
+  101:{ titre:"VELAMMA", image:CDN+"v1771238444/bd101_akkgl8.jpg", chapitres:21 },
+
 
   11:{ titre:"DESIR FORBIDDEN", image:CDN+"v1770055743/bd11_q4ne9o.jpg", chapitres:6 },
   12:{ titre:"LISTE DE VIE", image:CDN+"v1770055743/bd12_irq7fw.jpg", chapitres:7 },
@@ -191,6 +193,32 @@ const driveFiles = {
   "10-1":"1fU7F_DmCRfLz4Nhoz5_yWf7QgeZHlJtl",
   "10-2":"127en1IoodceEBvcLYC9qd44NjjQyG8bi",
   "10-3":"1bXvcshsrAlpq1fVt_OX1oQyOfqb6G9sx",
+
+
+
+  /* ===== BD 101 ===== */
+  "101-1":"1Ek35tZr3bxNtxujXetRj4rfZ36tIrK12",
+  "101-2":"1sCHdwMrli5Me2nXc5nivYuh7KgxtWwZ9",
+  "101-3":"1LOavWZ_99FZhnCD9IOrHpFtFyBct3jjx",
+  "101-4":"1pJ-47FD3Q3HUANQD-ZAeajTEw8EYGepH",
+  "101-5":"12ZZA2UpbnHvk6q25JNydI726nEA4aB0g",
+  "101-6":"1OrC77GdXqiSfkYpFLXcFbNWK2tEcLo0T",
+  "101-7":"1NzvF0tPANcFOzJ6VtEy1VN2lpsrWCEr7",
+  "101-8":"1Djdjgs23rj7OgOzZ7UmBvoeiChntTS0h",
+  "101-9":"196um8hOY-5vpxUB4q4nubDDIkfU0gXxX",
+  "101-10":"11cSwJXs6we8_MibkhabLBVbee2HHI92w",
+  "101-11":"1_gTnyguNO5rne3VKveJYvhMpK_Z_7WMA",
+  "101-12":"13flYV9utYrrFrQ8KSplZOuj7lbQz7GfR",
+  "101-13":"1V9fkg4jGMV84QBYT_dHWr5-DaNm4pjDt",
+  "101-14":"1vN7X-O0GqmL1EozztpGsp52DPBVPiXEA",
+  "101-15":"1FaOGGL0dRcyMaYaPjBFf-AFdvT1omk6_",
+  "101-16":"1VHgcZrdt3ZQS5Z-5skREfzN7vhdvyFR_",
+  "101-17":"1WbIi6h-CGkkegI_nFg6EvDXYrtooSz8t",
+  "101-18":"1SS-SVb7QsRVQ_w6k09P9m34N8ccaKEA1",
+  "101-19":"19hQP-AzFiMtlHae92cSrBIvA_1vb-9OO",
+  "101-20":"1szzzNNStb_YLC7mDQez9TK-nKhH0D8oR",
+  "101-21":"1vp50LKPo4bpTI19-aU5DcERD4yjK8E9v",
+
 
 
 

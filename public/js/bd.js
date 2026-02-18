@@ -460,30 +460,56 @@ document.getElementById("nextBtn").onclick=()=>{
 };
 
 /* ===============================
-   🌐 WEB AD SIMULATION
+   🌐 EXOCLICK REAL INTERSTITIAL
 ================================ */
 function afficherPub(callback){
 
-  const ad=document.createElement("div");
+  const adWrapper = document.createElement("div");
 
-  ad.style=`
+  adWrapper.style = `
     position:fixed;
     inset:0;
     background:black;
+    z-index:99999;
     display:flex;
     justify-content:center;
     align-items:center;
+    flex-direction:column;
     color:white;
-    z-index:99999;
-    font-size:22px;
   `;
 
-  ad.innerHTML="📺 Publicité...";
+  adWrapper.innerHTML = `
+    <h2>📺 Publicité en cours...</h2>
+    <p>Veuillez patienter quelques secondes</p>
+    <div id="exo-ad"></div>
+  `;
 
-  document.body.appendChild(ad);
+  document.body.appendChild(adWrapper);
 
+  /* Charger script ExoClick */
+  const script1 = document.createElement("script");
+  script1.src = "https://a.pemsrv.com/ad-provider.js";
+  script1.async = true;
+  document.body.appendChild(script1);
+
+  const ins = document.createElement("ins");
+  ins.className = "eas6a97888e35";
+  ins.setAttribute("data-zoneid", "5855286");
+
+  document.getElementById("exo-ad").appendChild(ins);
+
+  const script2 = document.createElement("script");
+  script2.innerHTML =
+    '(AdProvider = window.AdProvider || []).push({"serve": {}});';
+
+  document.body.appendChild(script2);
+
+  /* Temps obligatoire avant déblocage */
   setTimeout(()=>{
-    ad.remove();
-    callback();
-  },2500);
+
+      adWrapper.remove();
+
+      if(callback) callback();
+
+  },10000); // 10 secondes
 }

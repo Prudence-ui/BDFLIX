@@ -327,3 +327,28 @@ body {
     width: 130px;
   }
 }
+
+/* ===== FOOTER ===== */
+
+.site-footer{
+  background:#111;
+  color:#aaa;
+  text-align:center;
+  padding:25px 10px;
+  margin-top:40px;
+  font-size:14px;
+}
+
+.footer-links{
+  margin-bottom:10px;
+}
+
+.footer-links a{
+  color:#fff;
+  margin:0 12px;
+  text-decoration:none;
+}
+
+.footer-links a:hover{
+  color:#e50914;
+}

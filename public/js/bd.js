@@ -22,7 +22,7 @@ function showRewardedAd(callback) {
 
 
 /* 📚 BASE GOOGLE DRIVE */
-const GOOGLE_DRIVE_BASE = "https://drive.google.com/file/d/";
+  const DRIVE_PREVIEW = "https://drive.google.com/file/d/";
 
 /* ⚡ Cloudinary CDN */
 const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/f_auto,q_auto,w_400/";
@@ -57,21 +57,6 @@ const bds = {
 };
 
 
-
-/* 🔒 sécurité */
-const bd = bds[bdId];
-if (!bd) {
-  alert("BD introuvable");
-  location.href = "index.html";
-}
-
-/* 🎨 affichage infos */
-document.getElementById("titre").textContent = bd.titre;
-document.getElementById("cover").src = bd.image;
-
-let chapitre = 1;
-const viewer = document.getElementById("pdf-viewer");
-const chapitreTitle = document.getElementById("chapitre-title");
 
 /* 🔗 GOOGLE DRIVE FILES */
 const driveFiles = {
@@ -340,100 +325,165 @@ const driveFiles = {
   "20-20":"19y9Vb9oAGK3k15vCBq6qldAjBIuBdr0W"
 };
 
-/* 📖 charger chapitre */
-function chargerChapitre() {
-  chapitreTitle.textContent = `📖 Chapitre ${chapitre}`;
+
+
+/* ===============================
+   🔒 CHECK BD
+================================ */
+const bd = bds[bdId];
+
+if (!bd) {
+  alert("BD introuvable");
+  location.href="index.html";
+}
+
+/* ===============================
+   🎨 UI
+================================ */
+document.getElementById("titre").textContent = bd.titre;
+document.getElementById("cover").src = bd.image;
+
+const viewer = document.getElementById("pdf-viewer");
+const chapitreTitle = document.getElementById("chapitre-title");
+
+let chapitre = 1;
+
+/* ===============================
+   ⚡ CACHE SYSTEM (ULTRA RAPIDE)
+================================ */
+const cachePDF = {};
+
+function getDriveURL(id){
+  return `${DRIVE_PREVIEW}${id}/preview?embedded=true`;
+}
+
+/* ===============================
+   🚀 PRELOAD CHAPTER
+================================ */
+function preloadChapitre(num){
+
+  const key = `${bdId}-${num}`;
+  const fileId = driveFiles[key];
+
+  if(!fileId) return;
+  if(cachePDF[key]) return;
+
+  const iframe = document.createElement("iframe");
+  iframe.src = getDriveURL(fileId);
+  iframe.style.display="none";
+
+  document.body.appendChild(iframe);
+
+  cachePDF[key]=iframe;
+}
+
+/* ===============================
+   📖 LOAD CHAPTER
+================================ */
+function chargerChapitre(){
+
   const key = `${bdId}-${chapitre}`;
   const fileId = driveFiles[key];
 
-  if (!fileId) {
-    viewer.src = "";
-    chapitreTitle.textContent = "❌ Chapitre non disponible";
+  if(!fileId){
+    chapitreTitle.textContent="❌ Chapitre indisponible";
+    viewer.src="";
     return;
   }
 
-    viewer.src = `${GOOGLE_DRIVE_BASE}${fileId}/preview?embedded=true`;
+  chapitreTitle.textContent=`📖 Chapitre ${chapitre}`;
+
+  viewer.src = getDriveURL(fileId);
+
+  /* ⚡ PRELOAD NEXT */
+  preloadChapitre(chapitre+1);
 }
 
-/* affichage initial */
 chargerChapitre();
 
-  /* 🚀 Préchargement chapitre suivant */
-  function preloadNext() {
-    const nextKey = `${bdId}-${chapitre + 1}`;
-    const nextFile = driveFiles[nextKey];
-    if (!nextFile) return;
+/* ===============================
+   🔒 AD GATE
+================================ */
+function afficherBoutonPub(next){
 
-    const link = document.createElement("link");
-    link.rel = "prefetch";
-    link.href = `${GOOGLE_DRIVE_BASE}${nextFile}/preview`;
-    document.head.appendChild(link);
-  }
+  const gate=document.createElement("div");
 
-
-/* ➡️ chapitre suivant avec pub */
-document.getElementById("nextBtn").onclick = () => {
-  if (chapitre >= bd.chapitres) {
-    alert("📚 Fin de la BD !");
-    return;
-  }
-  showRewardedAd(() => {
-  chapitre++;
-  chargerChapitre();
-  });
-
-};
-
-/* 📺 publicité */
-function afficherPub(next) {
-  const ad = document.createElement("div");
-  ad.style = `
-    position:fixed; inset:0; background:#000; color:#fff;
-    display:flex; flex-direction:column;
-    justify-content:center; align-items:center;
-    font-size:26px; z-index:9999;
+  gate.style=`
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+    color:white;
   `;
 
-  let time = 10;
-  ad.innerHTML = `
-    <p id="timer">📺 Publicité... ${time}s</p>
-    <button disabled id="skip"
-      style="margin-top:25px;padding:14px 28px;border:none;
-      background:#e50914;color:white;font-size:18px;border-radius:8px;">
-      Continuer
+  gate.innerHTML=`
+    <h2>🔒 Chapitre verrouillé</h2>
+    <p>Regardez une publicité pour continuer</p>
+    <button id="watchAdBtn"
+      style="margin-top:20px;
+      padding:15px 30px;
+      background:#e50914;
+      border:none;
+      color:white;
+      border-radius:10px;
+      cursor:pointer;">
+      ▶ Regarder
     </button>
   `;
 
-  document.body.appendChild(ad);
+  document.body.appendChild(gate);
 
-  const interval = setInterval(() => {
-    time--;
-    document.getElementById("timer").textContent = `📺 Publicité... ${time}s`;
-    if (time <= 0) {
-      clearInterval(interval);
-      const btn = document.getElementById("skip");
-      btn.disabled = false;
-      btn.textContent = "Continuer la lecture";
-    }
-  }, 1000);
-
-  document.getElementById("skip").onclick = () => {
-    ad.remove();
-    next();
+  document.getElementById("watchAdBtn").onclick=()=>{
+    gate.remove();
+    showRewardedAd(next);
   };
 }
 
-/* 🚫 anti clic droit */
-document.addEventListener("contextmenu", e => e.preventDefault());
+/* ===============================
+   ▶ NEXT BUTTON
+================================ */
+document.getElementById("nextBtn").onclick=()=>{
 
-/* ✅ appelé par Android quand la pub est terminée */
-function onRewardEarned() {
-  if (window.rewardCallback) {
-    window.rewardCallback();
-    window.rewardCallback = null;
+  if(chapitre>=bd.chapitres){
+    alert("📚 Fin de la BD");
+    return;
   }
+
+  afficherBoutonPub(()=>{
+    chapitre++;
+    chargerChapitre();
+  });
+};
+
+/* ===============================
+   🌐 WEB AD SIMULATION
+================================ */
+function afficherPub(callback){
+
+  const ad=document.createElement("div");
+
+  ad.style=`
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    z-index:99999;
+    font-size:22px;
+  `;
+
+  ad.innerHTML="📺 Publicité...";
+
+  document.body.appendChild(ad);
+
+  setTimeout(()=>{
+    ad.remove();
+    callback();
+  },2500);
 }
-
-
-
-

@@ -6,19 +6,69 @@ function isAndroidApp() {
   return typeof Android !== "undefined";
 }
 
-/* 📺 Lancer Rewarded Ad (si app mobile) */
+
+/* ===============================
+   ⭐ REWARDED SYSTEM (ADSTERRA)
+================================ */
+
 function showRewardedAd(callback) {
 
-  // Si on est dans l'application Android
+  // APP ANDROID → garde ton système
   if (isAndroidApp()) {
     Android.showRewardedAd();
     window.rewardCallback = callback;
     return;
   }
 
-  // Sinon fallback = pub web actuelle
-  afficherPub(callback);
+  // WEB → Adsterra Social Bar
+  afficherPubAdsterra(callback);
 }
+
+/* ===============================
+   🌐 ADSTERRA SOCIAL BAR
+================================ */
+function afficherPubAdsterra(callback){
+
+  // écran noir fullscreen (illusion rewarded)
+  const adWrapper = document.createElement("div");
+
+  adWrapper.style = `
+    position:fixed;
+    inset:0;
+    background:black;
+    z-index:99999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    text-align:center;
+  `;
+
+  adWrapper.innerHTML = `
+    <h2>📺 Publicité en cours...</h2>
+    <p>Veuillez patienter quelques secondes</p>
+  `;
+
+  document.body.appendChild(adWrapper);
+
+  /* 🔥 Charger Adsterra UNIQUEMENT après clic utilisateur */
+  const script = document.createElement("script");
+  script.src="https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js";
+  script.async=true;
+
+  document.body.appendChild(script);
+
+  /* ⏱ Temps minimum (rewarded simulation) */
+  setTimeout(()=>{
+
+      adWrapper.remove();
+
+      if(callback) callback();
+
+  },8000); // 8 sec = bon équilibre CPM / UX
+}
+
 
 
 /* 📚 BASE GOOGLE DRIVE */
@@ -326,7 +376,6 @@ const driveFiles = {
 };
 
 
-
 /* ===============================
    🔒 CHECK BD
 ================================ */
@@ -348,42 +397,31 @@ const chapitreTitle = document.getElementById("chapitre-title");
 
 let chapitre = 1;
 
-/* ===============================
-   ⚡ CACHE SYSTEM (ULTRA RAPIDE)
-================================ */
 const cachePDF = {};
 
 function getDriveURL(id){
   return `${DRIVE_PREVIEW}${id}/preview?embedded=true`;
 }
 
-/* ===============================
-   🚀 PRELOAD CHAPTER
-================================ */
 function preloadChapitre(num){
 
   const key = `${bdId}-${num}`;
   const fileId = driveFiles[key];
 
-  if(!fileId) return;
-  if(cachePDF[key]) return;
+  if(!fileId || cachePDF[key]) return;
 
-  const iframe = document.createElement("iframe");
-  iframe.src = getDriveURL(fileId);
+  const iframe=document.createElement("iframe");
+  iframe.src=getDriveURL(fileId);
   iframe.style.display="none";
 
   document.body.appendChild(iframe);
-
   cachePDF[key]=iframe;
 }
 
-/* ===============================
-   📖 LOAD CHAPTER
-================================ */
 function chargerChapitre(){
 
-  const key = `${bdId}-${chapitre}`;
-  const fileId = driveFiles[key];
+  const key=`${bdId}-${chapitre}`;
+  const fileId=driveFiles[key];
 
   if(!fileId){
     chapitreTitle.textContent="❌ Chapitre indisponible";
@@ -392,10 +430,8 @@ function chargerChapitre(){
   }
 
   chapitreTitle.textContent=`📖 Chapitre ${chapitre}`;
+  viewer.src=getDriveURL(fileId);
 
-  viewer.src = getDriveURL(fileId);
-
-  /* ⚡ PRELOAD NEXT */
   preloadChapitre(chapitre+1);
 }
 
@@ -424,7 +460,8 @@ function afficherBoutonPub(next){
     <h2>🔒 Chapitre verrouillé</h2>
     <p>Regardez une publicité pour continuer</p>
     <button id="watchAdBtn"
-      style="margin-top:20px;
+      style="
+      margin-top:20px;
       padding:15px 30px;
       background:#e50914;
       border:none;
@@ -458,58 +495,3 @@ document.getElementById("nextBtn").onclick=()=>{
     chargerChapitre();
   });
 };
-
-/* ===============================
-   🌐 EXOCLICK REAL INTERSTITIAL
-================================ */
-function afficherPub(callback){
-
-  const adWrapper = document.createElement("div");
-
-  adWrapper.style = `
-    position:fixed;
-    inset:0;
-    background:black;
-    z-index:99999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    color:white;
-  `;
-
-  adWrapper.innerHTML = `
-    <h2>📺 Publicité en cours...</h2>
-    <p>Veuillez patienter quelques secondes</p>
-    <div id="exo-ad"></div>
-  `;
-
-  document.body.appendChild(adWrapper);
-
-  /* Charger script ExoClick */
-  const script1 = document.createElement("script");
-  script1.src = "https://a.pemsrv.com/ad-provider.js";
-  script1.async = true;
-  document.body.appendChild(script1);
-
-  const ins = document.createElement("ins");
-  ins.className = "eas6a97888e35";
-  ins.setAttribute("data-zoneid", "5855286");
-
-  document.getElementById("exo-ad").appendChild(ins);
-
-  const script2 = document.createElement("script");
-  script2.innerHTML =
-    '(AdProvider = window.AdProvider || []).push({"serve": {}});';
-
-  document.body.appendChild(script2);
-
-  /* Temps obligatoire avant déblocage */
-  setTimeout(()=>{
-
-      adWrapper.remove();
-
-      if(callback) callback();
-
-  },10000); // 10 secondes
-}

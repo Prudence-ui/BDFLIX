@@ -352,3 +352,29 @@ body {
 .footer-links a:hover{
   color:#e50914;
 }
+
+.ad-banner {
+    width: 100%;
+    max-width: 300px;      /* limite taille desktop */
+    height: auto;
+    margin: 20px auto;     /* centre horizontalement */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;      /* empêche débordement */
+}
+
+/* iframe injectée par Adsterra */
+.ad-banner iframe {
+    max-width: 100% !important;
+    height: auto !important;
+    border: none;
+}
+
+/* version mobile */
+@media (max-width: 480px) {
+    .ad-banner {
+        max-width: 260px;   /* plus petit sur téléphone */
+        transform: scale(0.85);
+    }
+}

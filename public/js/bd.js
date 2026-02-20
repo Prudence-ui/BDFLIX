@@ -2,35 +2,8 @@ const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
 /* ===============================
-   ANDROID DETECTION
-================================ */
-function isAndroidApp() {
-  return typeof Android !== "undefined";
-}
-
-/* ===============================
-   ⭐ REWARDED SYSTEM
-================================ */
-function showRewardedAd(callback) {
-
-  if (isAndroidApp()) {
-    Android.showRewardedAd();
-    window.rewardCallback = callback;
-    return;
-  }
-
-  afficherPubAdsterra(callback);
-}
-
-/* ===============================
-   🌐 ADSTERRA SOCIAL BAR
-================================ */
-function afficherPubAdsterra(callback){
-
-  /* ===============================
    🔓 UNLOCK CHAPTER SCREEN
 ================================ */
-
 function afficherEcranDeblocage(onUnlock){
 
   const unlock = document.createElement("div");
@@ -84,9 +57,41 @@ function afficherEcranDeblocage(onUnlock){
   };
 }
 
-  const adWrapper=document.createElement("div");
+/* ===============================
+   ANDROID DETECTION
+================================ */
+function isAndroidApp() {
+  return typeof Android !== "undefined";
+}
 
-  adWrapper.style=`
+/* ===============================
+   ⭐ REWARDED SYSTEM
+================================ */
+function showRewardedAd(callback) {
+
+  if (isAndroidApp()) {
+    Android.showRewardedAd();
+    window.rewardCallback = callback;
+    return;
+  }
+
+  afficherPubAdsterra(callback);
+}
+
+/* ===============================
+   ⭐ ADSTERRA REAL REWARDED ADS
+   (SMARTLINK + SOCIAL BAR SAFE)
+================================ */
+
+const REWARDED_LINK =
+"https://www.effectivegatecpm.com/p6yb7u0cx?key=fb8b052a0030adc6b4723bad14b73fc6";
+
+function afficherPubAdsterra(callback){
+
+  /* écran verrouillage */
+  const adWrapper = document.createElement("div");
+
+  adWrapper.style = `
     position:fixed;
     inset:0;
     background:black;
@@ -96,26 +101,67 @@ function afficherEcranDeblocage(onUnlock){
     align-items:center;
     flex-direction:column;
     color:white;
+    text-align:center;
+    padding:20px;
   `;
 
-  adWrapper.innerHTML=`
-    <h2>📺 Publicité en cours...</h2>
-    <p>Veuillez patienter...</p>
+  adWrapper.innerHTML = `
+    <h2>📺 Ouverture de la publicité...</h2>
+    <p>La publicité va s'ouvrir dans un nouvel onglet</p>
+    <p>Revenez ici après pour débloquer le chapitre ✅</p>
   `;
 
   document.body.appendChild(adWrapper);
 
+  /* ⚠️ ouvrir vraie pub (impression payée) */
+  const adWindow = window.open(REWARDED_LINK, "_blank");
+
+  if(!adWindow){
+    alert("Veuillez autoriser les popups pour continuer.");
+    adWrapper.remove();
+    return;
+  }
+
+  /* détecter retour utilisateur */
+  let unlocked = false;
+
+  const checkReturn = setInterval(() => {
+
+    if(adWindow.closed && !unlocked){
+
+      unlocked = true;
+      clearInterval(checkReturn);
+
+      adWrapper.remove();
+
+      /* ✅ relancer Social Bar automatiquement */
+      lancerSocialBar();
+
+      /* débloquer chapitre */
+      if(callback) callback();
+    }
+
+  },1000);
+}
+
+
+/* ===============================
+   🌐 SOCIAL BAR RELOAD
+================================ */
+
+function lancerSocialBar(){
+
+  const oldScript =
+    document.querySelector('script[src*="effectivegatecpm.com/08/f0/27"]');
+
+  if(oldScript) oldScript.remove();
+
   const script=document.createElement("script");
   script.src="https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js";
   script.async=true;
+
   document.body.appendChild(script);
-
-  setTimeout(()=>{
-    adWrapper.remove();
-    if(callback) callback();
-  },8000);
 }
-
 
 
 

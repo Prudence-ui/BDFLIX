@@ -365,14 +365,14 @@ const driveFiles = {
 
 
 /* ===============================
-   DRIVE CONFIG
+   DRIVE URL (FIX MOBILE)
 ================================ */
 function getDriveURL(id){
-  return `https://drive.google.com/file/d/${id}/preview?embedded=true`;
+  return `https://drive.google.com/file/d/${id}/preview`;
 }
 
 /* ===============================
-   DATA
+   DATA INIT
 ================================ */
 const bd=bds[bdId];
 
@@ -381,14 +381,9 @@ if(!bd){
   location.href="index.html";
 }
 
-/* ===============================
-   UI INIT
-================================ */
 document.getElementById("titre").textContent=bd.titre;
 
 const cover=document.getElementById("cover");
-cover.loading="eager";
-cover.decoding="async";
 cover.src=bd.image;
 
 const viewer=document.getElementById("pdf-viewer");
@@ -397,7 +392,25 @@ const chapitreTitle=document.getElementById("chapitre-title");
 let chapitre=1;
 
 /* ===============================
-   LOAD CHAPTER (SAFE)
+   LOADER UI
+================================ */
+function showLoader(){
+  viewer.innerHTML=`
+    <div style="
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100%;
+      color:white;
+      font-size:18px;
+    ">
+      ⏳ Chargement du chapitre...
+    </div>
+  `;
+}
+
+/* ===============================
+   LOAD CHAPTER (ULTRA SAFE)
 ================================ */
 function chargerChapitre(){
 
@@ -411,19 +424,33 @@ function chargerChapitre(){
 
   chapitreTitle.textContent=`📖 Chapitre ${chapitre}`;
 
-  viewer.innerHTML="";
+  showLoader();
 
   const iframe=document.createElement("iframe");
 
-  iframe.src=getDriveURL(fileId);
   iframe.style.width="100%";
   iframe.style.height="100%";
   iframe.style.border="none";
-  iframe.referrerPolicy="no-referrer";
   iframe.allow="autoplay";
+  iframe.loading="eager";
 
-  viewer.appendChild(iframe);
+  iframe.src=getDriveURL(fileId);
+
+  /* ✅ attendre que Drive charge */
+  iframe.onload=()=>{
+    viewer.innerHTML="";
+    viewer.appendChild(iframe);
+  };
+
+  /* ✅ fallback si Drive bloque */
+  setTimeout(()=>{
+    if(!viewer.contains(iframe)){
+      viewer.innerHTML="";
+      viewer.appendChild(iframe);
+    }
+  },3000);
 }
+
 chargerChapitre();
 
 /* ===============================
@@ -437,9 +464,7 @@ document.getElementById("nextBtn").onclick=()=>{
   }
 
   showRewardedAd(()=>{
-
     chapitre++;
     chargerChapitre();
-
   });
 };

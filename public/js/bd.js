@@ -1,26 +1,24 @@
 const params = new URLSearchParams(window.location.search);
 const bdId = params.get("id");
 
-/* 📱 Detecte si on est dans l'application Android */
+/* ===============================
+   ANDROID DETECTION
+================================ */
 function isAndroidApp() {
   return typeof Android !== "undefined";
 }
 
-
 /* ===============================
-   ⭐ REWARDED SYSTEM (ADSTERRA)
+   ⭐ REWARDED SYSTEM
 ================================ */
-
 function showRewardedAd(callback) {
 
-  // APP ANDROID → garde ton système
   if (isAndroidApp()) {
     Android.showRewardedAd();
     window.rewardCallback = callback;
     return;
   }
 
-  // WEB → Adsterra Social Bar
   afficherPubAdsterra(callback);
 }
 
@@ -29,10 +27,9 @@ function showRewardedAd(callback) {
 ================================ */
 function afficherPubAdsterra(callback){
 
-  // écran noir fullscreen (illusion rewarded)
-  const adWrapper = document.createElement("div");
+  const adWrapper=document.createElement("div");
 
-  adWrapper.style = `
+  adWrapper.style=`
     position:fixed;
     inset:0;
     background:black;
@@ -42,32 +39,26 @@ function afficherPubAdsterra(callback){
     align-items:center;
     flex-direction:column;
     color:white;
-    text-align:center;
   `;
 
-  adWrapper.innerHTML = `
+  adWrapper.innerHTML=`
     <h2>📺 Publicité en cours...</h2>
-    <p>Veuillez patienter quelques secondes</p>
+    <p>Veuillez patienter...</p>
   `;
 
   document.body.appendChild(adWrapper);
 
-  /* 🔥 Charger Adsterra UNIQUEMENT après clic utilisateur */
-  const script = document.createElement("script");
+  const script=document.createElement("script");
   script.src="https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js";
   script.async=true;
-
   document.body.appendChild(script);
 
-  /* ⏱ Temps minimum (rewarded simulation) */
   setTimeout(()=>{
-
-      adWrapper.remove();
-
-      if(callback) callback();
-
-  },8000); // 8 sec = bon équilibre CPM / UX
+    adWrapper.remove();
+    if(callback) callback();
+  },8000);
 }
+
 
 
 
@@ -373,9 +364,17 @@ const driveFiles = {
 };
 
 
+/* ===============================
+   DRIVE CONFIG
+================================ */
+const DRIVE_PREVIEW="https://drive.google.com/file/d/";
+
+function getDriveURL(id){
+  return `${DRIVE_PREVIEW}${id}/preview`;
+}
 
 /* ===============================
-   📚 DATA BD
+   DATA
 ================================ */
 const bd=bds[bdId];
 
@@ -385,7 +384,7 @@ if(!bd){
 }
 
 /* ===============================
-   🎨 UI
+   UI INIT
 ================================ */
 document.getElementById("titre").textContent=bd.titre;
 
@@ -394,29 +393,13 @@ cover.loading="eager";
 cover.decoding="async";
 cover.src=bd.image;
 
-
-/* ===============================
-   DRIVE CONFIG
-================================ */
-const DRIVE_PREVIEW="https://drive.google.com/file/d/";
-
-function getDriveURL(id){
-  return `${DRIVE_PREVIEW}${id}/preview?embedded=true`;
-}
-
-/* ===============================
-   UI
-================================ */
 const viewer=document.getElementById("pdf-viewer");
 const chapitreTitle=document.getElementById("chapitre-title");
 
 let chapitre=1;
 
-/* ✅ CACHE SIMPLE (1 seul preload) */
-let nextIframe=null;
-
 /* ===============================
-   CHARGEMENT OPTIMISÉ DRIVE
+   LOAD CHAPTER (SAFE)
 ================================ */
 function chargerChapitre(){
 
@@ -439,30 +422,9 @@ function chargerChapitre(){
   iframe.style.height="100%";
   iframe.style.border="none";
   iframe.loading="eager";
+  iframe.allow="autoplay";
 
   viewer.appendChild(iframe);
-
-  /* 🔥 PRELOAD SEULEMENT APRÈS LOAD */
-  iframe.onload=()=>{
-      preloadNext();
-  };
-}
-
-/* ===============================
-   PRELOAD SAFE (ANTI DRIVE BLOCK)
-================================ */
-function preloadNext(){
-
-  const nextKey=`${bdId}-${chapitre+1}`;
-  const nextId=driveFiles[nextKey];
-
-  if(!nextId) return;
-
-  nextIframe=document.createElement("iframe");
-  nextIframe.src=getDriveURL(nextId);
-  nextIframe.style.display="none";
-
-  document.body.appendChild(nextIframe);
 }
 
 chargerChapitre();
@@ -477,20 +439,10 @@ document.getElementById("nextBtn").onclick=()=>{
     return;
   }
 
-  afficherBoutonPub(()=>{
+  showRewardedAd(()=>{
 
     chapitre++;
-
-    /* ✅ utilise preload si dispo */
-    if(nextIframe){
-        viewer.innerHTML="";
-        viewer.appendChild(nextIframe);
-        nextIframe.style.display="block";
-        nextIframe=null;
-        preloadNext();
-    }else{
-        chargerChapitre();
-    }
+    chargerChapitre();
 
   });
 };

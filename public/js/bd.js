@@ -367,10 +367,8 @@ const driveFiles = {
 /* ===============================
    DRIVE CONFIG
 ================================ */
-const DRIVE_PREVIEW="https://drive.google.com/file/d/";
-
 function getDriveURL(id){
-  return `${DRIVE_PREVIEW}${id}/preview`;
+  return `https://drive.google.com/file/d/${id}/preview?embedded=true`;
 }
 
 /* ===============================
@@ -421,12 +419,11 @@ function chargerChapitre(){
   iframe.style.width="100%";
   iframe.style.height="100%";
   iframe.style.border="none";
-  iframe.loading="eager";
+  iframe.referrerPolicy="no-referrer";
   iframe.allow="autoplay";
 
   viewer.appendChild(iframe);
 }
-
 chargerChapitre();
 
 /* ===============================

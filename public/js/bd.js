@@ -410,12 +410,15 @@ function showLoader(){
 }
 
 /* ===============================
-   LOAD CHAPTER (ULTRA SAFE)
+   LOAD CHAPTER (NO FLICKER VERSION)
 ================================ */
+
+let iframe = null;
+
 function chargerChapitre(){
 
-  const key=`${bdId}-${chapitre}`;
-  const fileId=driveFiles[key];
+  const key = `${bdId}-${chapitre}`;
+  const fileId = driveFiles[key];
 
   if(!fileId){
     chapitreTitle.textContent="❌ Chapitre indisponible";
@@ -424,25 +427,38 @@ function chargerChapitre(){
 
   chapitreTitle.textContent=`📖 Chapitre ${chapitre}`;
 
-  showLoader();
+  viewer.innerHTML = `
+    <div style="
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100%;
+      color:white;
+      font-size:18px;
+    ">
+      ⏳ Chargement du chapitre...
+    </div>
+  `;
 
-  const iframe=document.createElement("iframe");
+  const url = getDriveURL(fileId);
 
-  iframe.style.width="100%";
-  iframe.style.height="100%";
-  iframe.style.border="none";
-  iframe.allow="autoplay";
-  iframe.loading="eager";
+  // créer iframe UNE SEULE FOIS
+  if(!iframe){
+    iframe = document.createElement("iframe");
+    iframe.style.width="100%";
+    iframe.style.height="100%";
+    iframe.style.border="none";
+    iframe.allow="autoplay";
+    iframe.loading="eager";
 
-  iframe.src=getDriveURL(fileId);
-
-  /* ✅ attendre que Drive charge */
-  iframe.onload=()=>{
     viewer.innerHTML="";
     viewer.appendChild(iframe);
-  };
+  }
 
-  /* ✅ fallback si Drive bloque */
+  // changer seulement la source
+  iframe.src = url;
+
+  /* fallback si Drive met du temps */
   setTimeout(()=>{
     if(!viewer.contains(iframe)){
       viewer.innerHTML="";
@@ -451,17 +467,27 @@ function chargerChapitre(){
   },3000);
 }
 
+
 chargerChapitre();
 
 /* ===============================
    NEXT BUTTON
 ================================ */
-document.getElementById("nextBtn").onclick=()=>{
+document.getElementById("nextBtn").onclick = () => {
 
-  if(chapitre>=bd.chapitres){
+  if(chapitre >= bd.chapitres){
     alert("📚 Fin de la BD");
     return;
   }
+
+  const confirmation = confirm(
+    "🎬 Regardez une publicité pour débloquer le chapitre suivant ?"
+  );
+
+  if(!confirmation) return;
+
+  // afficher loader pub
+  chapitreTitle.textContent = "📺 Publicité en cours...";
 
   showRewardedAd(()=>{
     chapitre++;

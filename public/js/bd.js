@@ -394,8 +394,9 @@ cover.loading="eager";
 cover.decoding="async";
 cover.src=bd.image;
 
+
 /* ===============================
-   ⚡ DRIVE OPTIMISÉ
+   DRIVE CONFIG
 ================================ */
 const DRIVE_PREVIEW="https://drive.google.com/file/d/";
 
@@ -403,44 +404,19 @@ function getDriveURL(id){
   return `${DRIVE_PREVIEW}${id}/preview?embedded=true`;
 }
 
+/* ===============================
+   UI
+================================ */
 const viewer=document.getElementById("pdf-viewer");
 const chapitreTitle=document.getElementById("chapitre-title");
 
 let chapitre=1;
 
-/* 🔥 CACHE ULTRA RAPIDE */
-const iframeCache={};
-
-function createIframe(fileId){
-
-  const iframe=document.createElement("iframe");
-
-  iframe.src=getDriveURL(fileId);
-  iframe.loading="eager";
-  iframe.style.width="100%";
-  iframe.style.height="100%";
-  iframe.style.border="none";
-
-  return iframe;
-}
-
-/* ⚡ PRELOAD MULTIPLE */
-function preloadChapitre(num){
-
-  const key=`${bdId}-${num}`;
-  const fileId=driveFiles[key];
-
-  if(!fileId || iframeCache[key]) return;
-
-  const iframe=createIframe(fileId);
-  iframe.style.display="none";
-
-  document.body.appendChild(iframe);
-  iframeCache[key]=iframe;
-}
+/* ✅ CACHE SIMPLE (1 seul preload) */
+let nextIframe=null;
 
 /* ===============================
-   🚀 CHARGEMENT INSTANTANÉ
+   CHARGEMENT OPTIMISÉ DRIVE
 ================================ */
 function chargerChapitre(){
 
@@ -456,69 +432,43 @@ function chargerChapitre(){
 
   viewer.innerHTML="";
 
-  let iframe;
+  const iframe=document.createElement("iframe");
 
-  if(iframeCache[key]){
-    iframe=iframeCache[key];
-  }else{
-    iframe=createIframe(fileId);
-    iframeCache[key]=iframe;
-  }
+  iframe.src=getDriveURL(fileId);
+  iframe.style.width="100%";
+  iframe.style.height="100%";
+  iframe.style.border="none";
+  iframe.loading="eager";
 
   viewer.appendChild(iframe);
 
-  /* 🔥 PRELOAD FUTUR */
-  preloadChapitre(chapitre+1);
-  preloadChapitre(chapitre+2);
+  /* 🔥 PRELOAD SEULEMENT APRÈS LOAD */
+  iframe.onload=()=>{
+      preloadNext();
+  };
+}
+
+/* ===============================
+   PRELOAD SAFE (ANTI DRIVE BLOCK)
+================================ */
+function preloadNext(){
+
+  const nextKey=`${bdId}-${chapitre+1}`;
+  const nextId=driveFiles[nextKey];
+
+  if(!nextId) return;
+
+  nextIframe=document.createElement("iframe");
+  nextIframe.src=getDriveURL(nextId);
+  nextIframe.style.display="none";
+
+  document.body.appendChild(nextIframe);
 }
 
 chargerChapitre();
 
 /* ===============================
-   🔒 AD GATE
-================================ */
-function afficherBoutonPub(next){
-
-  const gate=document.createElement("div");
-
-  gate.style=`
-    position:fixed;
-    inset:0;
-    background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:9999;
-    color:white;
-  `;
-
-  gate.innerHTML=`
-    <h2>🔒 Chapitre verrouillé</h2>
-    <p>Regardez une publicité pour continuer</p>
-    <button id="watchAdBtn"
-      style="
-      margin-top:20px;
-      padding:15px 30px;
-      background:#e50914;
-      border:none;
-      color:white;
-      border-radius:10px;
-      cursor:pointer;">
-      ▶ Regarder
-    </button>
-  `;
-
-  document.body.appendChild(gate);
-
-  document.getElementById("watchAdBtn").onclick=()=>{
-    gate.remove();
-    showRewardedAd(next);
-  };
-}
-
-/* ===============================
-   ▶ NEXT BUTTON
+   NEXT BUTTON
 ================================ */
 document.getElementById("nextBtn").onclick=()=>{
 
@@ -528,7 +478,19 @@ document.getElementById("nextBtn").onclick=()=>{
   }
 
   afficherBoutonPub(()=>{
+
     chapitre++;
-    chargerChapitre();
+
+    /* ✅ utilise preload si dispo */
+    if(nextIframe){
+        viewer.innerHTML="";
+        viewer.appendChild(nextIframe);
+        nextIframe.style.display="block";
+        nextIframe=null;
+        preloadNext();
+    }else{
+        chargerChapitre();
+    }
+
   });
 };

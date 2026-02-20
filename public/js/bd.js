@@ -71,9 +71,6 @@ function afficherPubAdsterra(callback){
 
 
 
-/* 📚 BASE GOOGLE DRIVE */
-  const DRIVE_PREVIEW = "https://drive.google.com/file/d/";
-
 /* ⚡ Cloudinary CDN */
 const CDN = "https://res.cloudinary.com/dulhq0vvv/image/upload/f_auto,q_auto,w_400/";
 
@@ -376,12 +373,13 @@ const driveFiles = {
 };
 
 
-/* ===============================
-   🔒 CHECK BD
-================================ */
-const bd = bds[bdId];
 
-if (!bd) {
+/* ===============================
+   📚 DATA BD
+================================ */
+const bd=bds[bdId];
+
+if(!bd){
   alert("BD introuvable");
   location.href="index.html";
 }
@@ -389,35 +387,61 @@ if (!bd) {
 /* ===============================
    🎨 UI
 ================================ */
-document.getElementById("titre").textContent = bd.titre;
-document.getElementById("cover").src = bd.image;
+document.getElementById("titre").textContent=bd.titre;
 
-const viewer = document.getElementById("pdf-viewer");
-const chapitreTitle = document.getElementById("chapitre-title");
+const cover=document.getElementById("cover");
+cover.loading="eager";
+cover.decoding="async";
+cover.src=bd.image;
 
-let chapitre = 1;
-
-const cachePDF = {};
+/* ===============================
+   ⚡ DRIVE OPTIMISÉ
+================================ */
+const DRIVE_PREVIEW="https://drive.google.com/file/d/";
 
 function getDriveURL(id){
   return `${DRIVE_PREVIEW}${id}/preview?embedded=true`;
 }
 
-function preloadChapitre(num){
+const viewer=document.getElementById("pdf-viewer");
+const chapitreTitle=document.getElementById("chapitre-title");
 
-  const key = `${bdId}-${num}`;
-  const fileId = driveFiles[key];
+let chapitre=1;
 
-  if(!fileId || cachePDF[key]) return;
+/* 🔥 CACHE ULTRA RAPIDE */
+const iframeCache={};
+
+function createIframe(fileId){
 
   const iframe=document.createElement("iframe");
+
   iframe.src=getDriveURL(fileId);
+  iframe.loading="eager";
+  iframe.style.width="100%";
+  iframe.style.height="100%";
+  iframe.style.border="none";
+
+  return iframe;
+}
+
+/* ⚡ PRELOAD MULTIPLE */
+function preloadChapitre(num){
+
+  const key=`${bdId}-${num}`;
+  const fileId=driveFiles[key];
+
+  if(!fileId || iframeCache[key]) return;
+
+  const iframe=createIframe(fileId);
   iframe.style.display="none";
 
   document.body.appendChild(iframe);
-  cachePDF[key]=iframe;
+  iframeCache[key]=iframe;
 }
 
+/* ===============================
+   🚀 CHARGEMENT INSTANTANÉ
+================================ */
 function chargerChapitre(){
 
   const key=`${bdId}-${chapitre}`;
@@ -425,14 +449,27 @@ function chargerChapitre(){
 
   if(!fileId){
     chapitreTitle.textContent="❌ Chapitre indisponible";
-    viewer.src="";
     return;
   }
 
   chapitreTitle.textContent=`📖 Chapitre ${chapitre}`;
-  viewer.src=getDriveURL(fileId);
 
+  viewer.innerHTML="";
+
+  let iframe;
+
+  if(iframeCache[key]){
+    iframe=iframeCache[key];
+  }else{
+    iframe=createIframe(fileId);
+    iframeCache[key]=iframe;
+  }
+
+  viewer.appendChild(iframe);
+
+  /* 🔥 PRELOAD FUTUR */
   preloadChapitre(chapitre+1);
+  preloadChapitre(chapitre+2);
 }
 
 chargerChapitre();

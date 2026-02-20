@@ -27,6 +27,63 @@ function showRewardedAd(callback) {
 ================================ */
 function afficherPubAdsterra(callback){
 
+  /* ===============================
+   🔓 UNLOCK CHAPTER SCREEN
+================================ */
+
+function afficherEcranDeblocage(onUnlock){
+
+  const unlock = document.createElement("div");
+
+  unlock.style = `
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:99999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    color:white;
+    padding:20px;
+  `;
+
+  unlock.innerHTML = `
+    <h2>🔒 Chapitre verrouillé</h2>
+    <p>Regardez une publicité pour débloquer le chapitre suivant</p>
+
+    <button id="unlockBtn" style="
+      margin-top:20px;
+      padding:15px 25px;
+      font-size:18px;
+      border:none;
+      border-radius:8px;
+      background:#ffcc00;
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      ▶ Regarder la pub
+    </button>
+  `;
+
+  document.body.appendChild(unlock);
+
+  document.getElementById("unlockBtn").onclick = () => {
+
+    unlock.innerHTML = `
+      <h2>📺 Publicité en cours...</h2>
+      <p>Veuillez patienter</p>
+    `;
+
+    showRewardedAd(()=>{
+      unlock.remove();
+      if(onUnlock) onUnlock();
+    });
+  };
+}
+
   const adWrapper=document.createElement("div");
 
   adWrapper.style=`
@@ -480,16 +537,7 @@ document.getElementById("nextBtn").onclick = () => {
     return;
   }
 
-  const confirmation = confirm(
-    "🎬 Regardez une publicité pour débloquer le chapitre suivant ?"
-  );
-
-  if(!confirmation) return;
-
-  // afficher loader pub
-  chapitreTitle.textContent = "📺 Publicité en cours...";
-
-  showRewardedAd(()=>{
+  afficherEcranDeblocage(()=>{
     chapitre++;
     chargerChapitre();
   });

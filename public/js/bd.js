@@ -75,74 +75,87 @@ function showRewardedAd(callback) {
     return;
   }
 
-  afficherPubAdsterra(callback);
+  afficherTransitionPub(callback);
 }
 
 /* ===============================
-   ⭐ ADSTERRA REAL REWARDED ADS
-   (SMARTLINK + SOCIAL BAR SAFE)
+   ⭐ TRANSITION PUB (NO POPUP)
 ================================ */
 
-const REWARDED_LINK =
-"https://www.effectivegatecpm.com/p6yb7u0cx?key=fb8b052a0030adc6b4723bad14b73fc6";
+function afficherTransitionPub(callback){
 
-function afficherPubAdsterra(callback){
+  const transition = document.createElement("div");
 
-  /* écran verrouillage */
-  const adWrapper = document.createElement("div");
-
-  adWrapper.style = `
+  transition.style = `
     position:fixed;
     inset:0;
-    background:black;
-    z-index:99999;
+    background:#000;
+    z-index:999999;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
     color:white;
     text-align:center;
     padding:20px;
   `;
 
-  adWrapper.innerHTML = `
-    <h2>📺 Ouverture de la publicité...</h2>
-    <p>La publicité va s'ouvrir dans un nouvel onglet</p>
-    <p>Revenez ici après pour débloquer le chapitre ✅</p>
+  transition.innerHTML = `
+    <h2>⏳ Chargement du chapitre...</h2>
+
+    <div style="margin:20px 0;">
+      <div id="transition-native"></div>
+    </div>
+
+    <div id="transition-banner"></div>
   `;
 
-  document.body.appendChild(adWrapper);
+  document.body.appendChild(transition);
 
-  /* ⚠️ ouvrir vraie pub (impression payée) */
-  const adWindow = window.open(REWARDED_LINK, "_blank");
 
-  if(!adWindow){
-    alert("Veuillez autoriser les popups pour continuer.");
-    adWrapper.remove();
-    return;
-  }
+  /* ✅ Native Ad */
+  const nativeScript = document.createElement("script");
+  nativeScript.async = true;
+  nativeScript.dataset.cfasync = "false";
+  nativeScript.src =
+  "https://pl28762803.effectivegatecpm.com/1f9aca4e88182320aaf6e68925594df0/invoke.js";
 
-  /* détecter retour utilisateur */
-  let unlocked = false;
+  document.body.appendChild(nativeScript);
 
-  const checkReturn = setInterval(() => {
 
-    if(adWindow.closed && !unlocked){
+  /* ✅ Banner Ad */
+  const bannerScript1 = document.createElement("script");
+  bannerScript1.innerHTML = `
+    atOptions = {
+      'key' : 'c3a7c2cc0b27ca6c0c6d08feac54d218',
+      'format' : 'iframe',
+      'height' : 250,
+      'width' : 300,
+      'params' : {}
+    };
+  `;
 
-      unlocked = true;
-      clearInterval(checkReturn);
+  const bannerScript2 = document.createElement("script");
+  bannerScript2.src =
+  "https://www.highperformanceformat.com/c3a7c2cc0b27ca6c0c6d08feac54d218/invoke.js";
 
-      adWrapper.remove();
+  transition.querySelector("#transition-banner")
+    .appendChild(bannerScript1);
 
-      /* ✅ relancer Social Bar automatiquement */
-      lancerSocialBar();
+  transition.querySelector("#transition-banner")
+    .appendChild(bannerScript2);
 
-      /* débloquer chapitre */
-      if(callback) callback();
-    }
 
-  },1000);
+  /* ⏱️ durée affichage pub */
+  setTimeout(()=>{
+
+    transition.remove();
+
+    if(callback) callback();
+
+  },2000); // 2 secondes
 }
+
 
 
 /* ===============================
@@ -588,3 +601,36 @@ document.getElementById("nextBtn").onclick = () => {
     chargerChapitre();
   });
 };
+
+/* ===============================
+   🚀 PRELOAD ADS (OPTIMISATION CPM)
+================================ */
+
+let adsPreloaded = false;
+
+function preloadAds(){
+
+  if(adsPreloaded) return;
+  adsPreloaded = true;
+
+  console.log("✅ Préchargement pubs Adsterra");
+
+  /* Précharge Native */
+  const nativeScript = document.createElement("script");
+  nativeScript.async = true;
+  nativeScript.dataset.cfasync = "false";
+  nativeScript.src =
+    "https://pl28762803.effectivegatecpm.com/1f9aca4e88182320aaf6e68925594df0/invoke.js";
+
+  document.body.appendChild(nativeScript);
+
+  /* Précharge Banner */
+  const bannerScript = document.createElement("script");
+  bannerScript.src =
+    "https://www.highperformanceformat.com/c3a7c2cc0b27ca6c0c6d08feac54d218/invoke.js";
+
+  document.body.appendChild(bannerScript);
+}
+
+/* lancer automatiquement */
+preloadAds();

@@ -120,7 +120,9 @@ function afficherTransitionPub(callback){
   nativeScript.src =
   "https://pl28762803.effectivegatecpm.com/1f9aca4e88182320aaf6e68925594df0/invoke.js";
 
-  document.body.appendChild(nativeScript);
+  transition
+  .querySelector("#transition-native")
+  .appendChild(nativeScript);
 
 
   /* ✅ Banner Ad */
@@ -153,27 +155,7 @@ function afficherTransitionPub(callback){
 
     if(callback) callback();
 
-  },2000); // 2 secondes
-}
-
-
-
-/* ===============================
-   🌐 SOCIAL BAR RELOAD
-================================ */
-
-function lancerSocialBar(){
-
-  const oldScript =
-    document.querySelector('script[src*="effectivegatecpm.com/08/f0/27"]');
-
-  if(oldScript) oldScript.remove();
-
-  const script=document.createElement("script");
-  script.src="https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js";
-  script.async=true;
-
-  document.body.appendChild(script);
+  },10000); // 10 secondes
 }
 
 
@@ -645,21 +627,21 @@ let socialBarInterval = null;
 /* charge la social bar */
 function lancerSocialBar(){
 
-  // ne pas lancer si onglet inactif
   if (document.hidden) return;
 
   console.log("📢 Social Bar affichée");
 
-  // supprimer ancienne instance
-  const oldScript =
-    document.querySelector('script[src*="08f027a8afe2523fcba1bd35eaabf7aa.js"]');
+  // supprimer ancienne
+  document
+    .querySelectorAll('script[src*="effectivegatecpm.com/08/f0/27"]')
+    .forEach(s => s.remove());
 
-  if(oldScript) oldScript.remove();
-
-  // injecter nouvelle pub
+  // forcer reload (anti cache)
   const script = document.createElement("script");
+
   script.src =
-    "https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js";
+    "https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js?"+Date.now();
+
   script.async = true;
 
   document.body.appendChild(script);

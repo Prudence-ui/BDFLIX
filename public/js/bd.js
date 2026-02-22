@@ -634,3 +634,64 @@ function preloadAds(){
 
 /* lancer automatiquement */
 preloadAds();
+
+
+/* ===============================
+   📱 SOCIAL BAR AUTO (3 MINUTES)
+================================ */
+
+let socialBarInterval = null;
+
+/* charge la social bar */
+function lancerSocialBar(){
+
+  // ne pas lancer si onglet inactif
+  if (document.hidden) return;
+
+  console.log("📢 Social Bar affichée");
+
+  // supprimer ancienne instance
+  const oldScript =
+    document.querySelector('script[src*="08f027a8afe2523fcba1bd35eaabf7aa.js"]');
+
+  if(oldScript) oldScript.remove();
+
+  // injecter nouvelle pub
+  const script = document.createElement("script");
+  script.src =
+    "https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js";
+  script.async = true;
+
+  document.body.appendChild(script);
+}
+
+
+/* ▶ démarrage intelligent */
+function startSocialBarSystem(){
+
+  // première pub après 25 secondes de lecture
+  setTimeout(() => {
+    lancerSocialBar();
+  }, 25000);
+
+  // ensuite toutes les 3 minutes
+  socialBarInterval = setInterval(() => {
+    lancerSocialBar();
+  }, 180000);
+}
+
+
+/* ⛔ stop si utilisateur quitte la page */
+document.addEventListener("visibilitychange", () => {
+
+  if(document.hidden){
+    console.log("⏸ Social Bar pause");
+  } else {
+    console.log("▶ Social Bar reprise");
+  }
+
+});
+
+
+/* 🚀 LANCEMENT AUTOMATIQUE */
+startSocialBarSystem();

@@ -396,3 +396,110 @@ body {
   height:100%;
   border:none;
 }
+
+/* =========================
+   NATIVE ADS HORIZONTAL PRO
+========================= */
+
+.native-horizontal{
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  padding:10px 10px;
+  margin:25px 0;
+  scroll-behavior:smooth;
+}
+
+/* cache scrollbar mobile */
+.native-horizontal::-webkit-scrollbar{
+  display:none;
+}
+
+/* force les ads en ligne */
+.native-horizontal div,
+.native-horizontal iframe{
+  display:inline-block !important;
+  vertical-align:top !important;
+}
+
+/* taille mobile parfaite */
+.native-horizontal iframe{
+  width:160px !important;
+  height:auto !important;
+  margin-right:10px !important;
+  border-radius:8px;
+}
+
+/* desktop */
+@media(min-width:768px){
+  .native-horizontal iframe{
+    width:220px !important;
+  }
+}
+
+.native-title{
+  color:white;
+  font-size:16px;
+  margin:10px;
+  font-weight:600;
+}
+
+/* =========================
+   NATIVE ADS STYLE MANGA PRO
+========================= */
+
+.native-wrapper{
+  margin:25px 0;
+}
+
+.native-label{
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  margin:10px 15px;
+}
+
+/* scroll horizontal */
+.native-horizontal{
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  padding:10px;
+  scroll-behavior:smooth;
+}
+
+.native-horizontal::-webkit-scrollbar{
+  display:none;
+}
+
+/* force inline layout */
+.native-horizontal iframe,
+.native-horizontal div{
+  display:inline-block !important;
+  vertical-align:top;
+}
+
+/* mobile */
+.native-horizontal iframe{
+  width:160px !important;
+  margin-right:10px !important;
+  border-radius:10px;
+}
+
+/* desktop */
+@media(min-width:768px){
+  .native-horizontal iframe{
+    width:220px !important;
+  }
+}
+
+.native-horizontal {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 10px;
+}
+
+.native-horizontal iframe {
+  min-width: 160px;
+}

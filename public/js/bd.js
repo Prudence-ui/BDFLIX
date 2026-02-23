@@ -75,8 +75,68 @@ function showRewardedAd(callback) {
     return;
   }
 
-  afficherTransitionPub(callback);
-}
+lancerLocker(callback);}
+
+/* ===============================
+   🔒 ADSTERRA LOCKER SYSTEM
+================================ */
+
+function lancerLocker(callback){
+
+  console.log("🔒 Locker publicité lancé");
+
+  // écran noir obligatoire
+  const locker = document.createElement("div");
+
+  locker.style = `
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:999999;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+    padding:20px;
+  `;
+
+  locker.innerHTML = `
+    <h2>🔓 Déblocage du chapitre...</h2>
+    <p>Veuillez interagir avec la publicité pour continuer</p>
+    <p style="opacity:.7;margin-top:10px;">Chargement...</p>
+  `;
+
+  document.body.appendChild(locker);
+
+  // simule interaction utilisateur pour autoriser pub
+      setTimeout(() => {
+        lancerSocialBar();
+      }, 500);
+
+  
+  /* ⏱ temps minimum obligatoire */
+  let timer = 0;
+
+const interval = setInterval(()=>{
+
+  if(!document.hidden){
+    timer++;
+  }
+
+  if(timer >= 10){
+    clearInterval(interval);
+    locker.remove();
+
+    console.log("✅ Chapitre débloqué");
+
+    if(callback) callback();
+  }
+
+},1000);
+
+} // ✅ FIN DE lancerLocker
 
 /* ===============================
    ⭐ TRANSITION PUB (NO POPUP)
@@ -584,39 +644,6 @@ document.getElementById("nextBtn").onclick = () => {
   });
 };
 
-/* ===============================
-   🚀 PRELOAD ADS (OPTIMISATION CPM)
-================================ */
-
-let adsPreloaded = false;
-
-function preloadAds(){
-
-  if(adsPreloaded) return;
-  adsPreloaded = true;
-
-  console.log("✅ Préchargement pubs Adsterra");
-
-  /* Précharge Native */
-  const nativeScript = document.createElement("script");
-  nativeScript.async = true;
-  nativeScript.dataset.cfasync = "false";
-  nativeScript.src =
-    "https://pl28762803.effectivegatecpm.com/1f9aca4e88182320aaf6e68925594df0/invoke.js";
-
-  document.body.appendChild(nativeScript);
-
-  /* Précharge Banner */
-  const bannerScript = document.createElement("script");
-  bannerScript.src =
-    "https://www.highperformanceformat.com/c3a7c2cc0b27ca6c0c6d08feac54d218/invoke.js";
-
-  document.body.appendChild(bannerScript);
-}
-
-/* lancer automatiquement */
-preloadAds();
-
 
 /* ===============================
    📱 SOCIAL BAR AUTO (3 MINUTES)
@@ -627,39 +654,50 @@ let socialBarInterval = null;
 /* charge la social bar */
 function lancerSocialBar(){
 
-  if (document.hidden) return;
+  if (document.hidden) {
+    console.log("🚫 Page inactive — pub annulée");
+    return;
+  }
 
   console.log("📢 Social Bar affichée");
 
-  // supprimer ancienne
   document
-    .querySelectorAll('script[src*="effectivegatecpm.com/08/f0/27"]')
+    .querySelectorAll('script[data-socialbar]')
     .forEach(s => s.remove());
 
-  // forcer reload (anti cache)
-  const script = document.createElement("script");
+    const script = document.createElement("script");
+
+    script.dataset.socialbar = "1";
+
 
   script.src =
-    "https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js?"+Date.now();
+  "https://pl28746286.effectivegatecpm.com/08/f0/27/08f027a8afe2523fcba1bd35eaabf7aa.js?"+Date.now();
 
   script.async = true;
+  script.defer = true;
 
   document.body.appendChild(script);
 }
 
-
 /* ▶ démarrage intelligent */
 function startSocialBarSystem(){
 
-  // première pub après 25 secondes de lecture
-  setTimeout(() => {
-    lancerSocialBar();
-  }, 25000);
+  let firstInteraction = false;
 
-  // ensuite toutes les 3 minutes
-  socialBarInterval = setInterval(() => {
+  document.addEventListener("click", () => {
+
+    if(firstInteraction) return;
+    firstInteraction = true;
+
+    console.log("✅ Interaction détectée → Social Bar autorisée");
+
     lancerSocialBar();
-  }, 180000);
+
+    // interval supprimé — géré par lecture réelle
+console.log("🧠 Smart Social Bar activée");
+
+  }, { once:true });
+
 }
 
 
@@ -674,6 +712,64 @@ document.addEventListener("visibilitychange", () => {
 
 });
 
+/* ===============================
+   🧠 SOCIAL BAR SMART (SCROLL BASED)
+================================ */
+
+let readingTime = 0;
+let isReading = false;
+let socialCooldown = false;
+
+/* détecte scroll utilisateur */
+window.addEventListener("scroll", () => {
+
+  if(document.hidden) return;
+
+  isReading = true;
+
+});
+
+/* reset si utilisateur inactif */
+setInterval(()=>{
+
+  if(!isReading){
+    readingTime = Math.max(0, readingTime - 5);
+  }
+
+  isReading = false;
+
+},5000);
+
+
+/* compteur lecture réelle */
+setInterval(()=>{
+
+  if(document.hidden) return;
+
+  if(isReading && !socialCooldown){
+
+    readingTime++;
+
+    console.log("📖 Lecture active:", readingTime,"sec");
+
+    /* 🔥 déclenche pub après 180s lecture réelle */
+    if(readingTime >= 180){
+
+      socialCooldown = true;
+      readingTime = 0;
+
+      console.log("💰 Social Bar déclenchée (lecture réelle)");
+
+      lancerSocialBar();
+
+      /* cooldown anti-spam */
+      setTimeout(()=>{
+        socialCooldown = false;
+      },180000); // 3 min cooldown
+    }
+  }
+
+},1000);
 
 /* 🚀 LANCEMENT AUTOMATIQUE */
 startSocialBarSystem();

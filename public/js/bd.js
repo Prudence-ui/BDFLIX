@@ -104,7 +104,7 @@ function lancerLocker(callback){
 
   locker.innerHTML = `
     <h2>🔓 Déblocage du chapitre...</h2>
-    <p>Veuillez interagir avec la publicité pour continuer</p>
+    <p>Veuillez patienter quelques secondes pour continuer</p>
     <p style="opacity:.7;margin-top:10px;">Chargement...</p>
   `;
 
@@ -125,7 +125,7 @@ const interval = setInterval(()=>{
     timer++;
   }
 
-  if(timer >= 10){
+  if(timer >= 20){
     clearInterval(interval);
     locker.remove();
 
@@ -639,9 +639,16 @@ document.getElementById("nextBtn").onclick = () => {
   }
 
   afficherEcranDeblocage(()=>{
-    chapitre++;
-    chargerChapitre();
+
+    afficherTransitionPub(()=>{
+
+      chapitre++;
+      chargerChapitre();
+
+    });
+
   });
+
 };
 
 
@@ -765,7 +772,7 @@ setInterval(()=>{
       /* cooldown anti-spam */
       setTimeout(()=>{
         socialCooldown = false;
-      },180000); // 3 min cooldown
+      },240000); // 4 min cooldown
     }
   }
 
